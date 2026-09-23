@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics="">
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:oklch(0.955 0.004 250);font-family:"IBM Plex Sans",system-ui,sans-serif;color:oklch(0.22 0.015 250);-webkit-font-smoothing:antialiased}
+a{color:oklch(0.42 0.14 248);text-decoration:none}a:hover{text-decoration:underline}
+</style>
+</helmet>
+
+<div style="padding:44px 40px 80px;display:flex;flex-direction:column;gap:32px">
+
+  <header style="display:flex;flex-direction:column;gap:14px;max-width:900px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:36px;height:36px;border-radius:10px;background:oklch(0.42 0.14 248);display:flex;align-items:center;justify-content:center"><div style="width:13px;height:13px;border-radius:50%;background:oklch(0.93 0.06 95)"></div></div>
+      <div style="font-size:22px;font-weight:600;letter-spacing:-0.02em">Nur Pay — ekranlar</div>
+      <span style="font-size:12.5px;font-weight:500;padding:5px 10px;border-radius:999px;background:#fff;border:1px solid oklch(0.90 0.006 250);color:oklch(0.47 0.012 250)">30 экранов · 12 групп · 402×874</span>
+    </div>
+    <p style="margin:0;font-size:15px;line-height:1.65;color:oklch(0.35 0.012 250);max-width:74ch">Экраны сгруппированы по задачам: вход, затем клиентские блоки (каркас → оплата в магазине → перевод → пополнение → QR и чек), потом мерчант и состояния. Номер экрана = номер группы и позиция в ней. PIN спрашивается всегда, платёжный QR живёт 60 секунд, пополнение — кодом активации.</p>
+  </header>
+
+  <div style="display:flex;align-items:flex-start;gap:24px">
+
+  <section style="display:flex;flex-direction:column;gap:18px;background:#fff;border:1px solid oklch(0.91 0.006 250);border-radius:22px;padding:26px 26px 30px;box-shadow:0 1px 2px oklch(0.3 0.02 250 / 0.04);flex:0 0 auto;width:462px">
+    <div style="display:flex;align-items:center;gap:12px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;padding:4px 9px;border-radius:7px;background:oklch(0.22 0.015 250);color:#fff">01</span><span style="font-size:13px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:oklch(0.22 0.015 250)">Başlangyç — вход и создание PIN</span><span style="flex:1;height:1px;background:oklch(0.90 0.006 250)"></span></div>
+    <p style="margin:0;max-width:78ch;font-size:14.5px;line-height:1.6;color:oklch(0.35 0.012 250)">Три шага при первой установке. PIN здесь отдельный экран — за ним нет содержимого, которое нужно показывать.</p>
+    <div style="display:flex;flex-direction:column;gap:30px">
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.22 0.015 250);color:#fff">1.1</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Telefon belgisi</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:76px 20px 44px;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;gap:22px;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="width:44px;height:44px;border-radius:12px;background:oklch(0.42 0.14 248);display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;border-radius:50%;background:oklch(0.93 0.06 95)"></div></div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:26px;font-weight:600;line-height:1.25">Telefon belgiňiz</div>
+              <div style="font-size:15px;line-height:1.5;color:oklch(0.47 0.012 250)">Size SMS arkaly kod ugradarys</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="height:56px;border-radius:10px;border:1.5px solid oklch(0.42 0.14 248);background:#fff;display:flex;align-items:stretch;overflow:hidden">
+                <div style="display:flex;align-items:center;padding:0 14px;border-right:1px solid oklch(0.90 0.006 250)">
+                  <span style="font-size:19px;font-weight:500;font-variant-numeric:tabular-nums;color:oklch(0.47 0.012 250)">+993</span>
+                </div>
+                <div style="flex:1;display:flex;align-items:center;gap:2px;padding:0 14px">
+                  <span style="font-size:19px;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:0.03em">65 12 34 56</span>
+                  <span style="width:1.5px;height:22px;background:oklch(0.42 0.14 248);margin-left:2px"></span>
+                </div>
+              </div>
+              <span style="font-size:13.5px;color:oklch(0.63 0.01 250)">8 sany · operator kody bilen</span>
+            </div>
+            <div style="flex:1"></div>
+            <div style="font-size:13px;line-height:1.5;color:oklch(0.63 0.01 250)">Dowam etmek bilen hyzmat şertlerini kabul edýärsiňiz</div>
+            <div style="height:56px;border-radius:14px;background:oklch(0.42 0.14 248);color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Dowam et</div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.22 0.015 250);color:#fff">1.2</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">SMS kody</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:76px 20px 44px;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;gap:22px;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="font-size:26px;font-weight:600;line-height:1.25">Kody giriziň</div>
+            <div style="font-size:15px;line-height:1.5;color:oklch(0.47 0.012 250)">+993 65 12 34 56 belgä ugradyldy</div>
+            <div style="display:flex;gap:10px">
+              <div style="flex:1;height:68px;border-radius:10px;border:1.5px solid oklch(0.86 0.008 250);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:600;font-variant-numeric:tabular-nums">4</div>
+              <div style="flex:1;height:68px;border-radius:10px;border:1.5px solid oklch(0.86 0.008 250);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:600;font-variant-numeric:tabular-nums">1</div>
+              <div style="flex:1;height:68px;border-radius:10px;border:2px solid oklch(0.42 0.14 248);box-shadow:0 0 0 4px oklch(0.42 0.14 248 / 0.12)"></div>
+              <div style="flex:1;height:68px;border-radius:10px;border:1.5px solid oklch(0.86 0.008 250)"></div>
+            </div>
+            <div style="font-size:15px;color:oklch(0.47 0.012 250);font-variant-numeric:tabular-nums">Kody gaýtadan ugrat — 0:42</div>
+            <div style="flex:1"></div>
+            <div style="height:56px;border-radius:14px;background:oklch(0.93 0.004 250);color:oklch(0.70 0.008 250);font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Tassykla</div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.22 0.015 250);color:#fff">1.3</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">PIN dörediň</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:76px 20px 44px;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;align-items:center;gap:18px;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="font-size:26px;font-weight:600;text-align:center">PIN dörediň</div>
+            <div style="font-size:15px;color:oklch(0.47 0.012 250);text-align:center;max-width:30ch;line-height:1.5">Her tölegde şu 4 sany soralar</div>
+            <div style="display:flex;gap:16px;padding:14px 0">
+              <div style="width:18px;height:18px;border-radius:50%;background:oklch(0.42 0.14 248)"></div>
+              <div style="width:18px;height:18px;border-radius:50%;background:oklch(0.42 0.14 248)"></div>
+              <div style="width:18px;height:18px;border-radius:50%;border:2px solid oklch(0.82 0.01 250)"></div>
+              <div style="width:18px;height:18px;border-radius:50%;border:2px solid oklch(0.82 0.01 250)"></div>
+            </div>
+            <div style="flex:1"></div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%">
+              <div style="height:72px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:500">1</div>
+              <div style="height:72px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:500">2</div>
+              <div style="height:72px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:500">3</div>
+              <div style="height:72px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:500">4</div>
+              <div style="height:72px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:500">5</div>
+              <div style="height:72px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:500">6</div>
+              <div style="height:72px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:500">7</div>
+              <div style="height:72px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:500">8</div>
+              <div style="height:72px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:500">9</div>
+              <div style="height:72px"></div>
+              <div style="height:72px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:500">0</div>
+              <div style="height:72px;border-radius:12px;background:oklch(0.95 0.006 250);display:flex;align-items:center;justify-content:center;font-size:24px">⌫</div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:18px;background:#fff;border:1px solid oklch(0.91 0.006 250);border-radius:22px;padding:26px 26px 30px;box-shadow:0 1px 2px oklch(0.3 0.02 250 / 0.04);flex:0 0 auto;width:462px">
+    <div style="display:flex;align-items:center;gap:12px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;padding:4px 9px;border-radius:7px;background:oklch(0.42 0.14 248);color:#fff">02</span><span style="font-size:13px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:oklch(0.42 0.14 248)">Müşderi — главный, история</span><span style="flex:1;height:1px;background:oklch(0.90 0.006 250)"></span></div>
+    <p style="margin:0;max-width:78ch;font-size:14.5px;line-height:1.6;color:oklch(0.35 0.012 250)">Каркас клиентской части: вкладки Esasy · Taryh, главное действие — плавающая кнопка справа, переводы и пополнение в доке под палец. Публичный QR — иконка в шапке, отдельной вкладки у него нет. Профиль — отдельная группа в конце.</p>
+    <div style="display:flex;flex-direction:column;gap:30px">
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.42 0.14 248);color:#fff">2.1</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Esasy · базовый вариант</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 0 0;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;position:relative;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 20px 14px">
+              <div style="display:flex;align-items:center;gap:9px"><div style="width:28px;height:28px;border-radius:8px;background:oklch(0.42 0.14 248);display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border-radius:50%;background:oklch(0.93 0.06 95)"></div></div><span style="font-size:17px;font-weight:600">Nur Pay</span></div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:6px 10px;border-radius:999px;background:oklch(0.95 0.04 152);color:oklch(0.40 0.11 152)"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.52 0.13 152)"></span>Onlaýn</span>
+                <div style="width:40px;height:40px;border-radius:12px;background:#fff;border:1px solid oklch(0.90 0.006 250);display:flex;align-items:center;justify-content:center"><div style="width:20px;height:20px;background:repeating-conic-gradient(oklch(0.34 0.12 248) 0% 25%,#fff 0% 50%) 0 0/7px 7px;border-radius:2px"></div></div>
+              </div>
+            </div>
+            <div style="padding:0 20px;display:flex;flex-direction:column;gap:14px;flex:1;overflow:hidden">
+              <div style="border-radius:20px;background:oklch(0.42 0.14 248);padding:20px;color:#fff;display:flex;flex-direction:column;gap:4px">
+                <div style="font-size:13px;color:oklch(0.86 0.04 248)">Soňky sinhronizasiýa: şu gün 14:32</div>
+                <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:48px;font-weight:600;letter-spacing:-0.035em;font-variant-numeric:tabular-nums;line-height:1.1">248,50</span><span style="font-size:20px;font-weight:500;color:oklch(0.88 0.03 248)">TMT</span></div>
+                <div style="font-size:13.5px;color:oklch(0.86 0.04 248)">Balans</div>
+              </div>
+              <div style="font-size:17px;font-weight:600;padding-top:2px">Soňky amallar</div>
+              <div style="background:#fff;border-radius:14px;border:1px solid oklch(0.93 0.006 250);overflow:hidden">
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid oklch(0.93 0.006 250)"><div style="width:40px;height:40px;border-radius:50%;background:oklch(0.95 0.04 152);color:oklch(0.40 0.11 152);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600">↓</div><div style="flex:1"><div style="font-size:16px;font-weight:600">Merdan Ataýew</div><div style="font-size:13px;color:oklch(0.47 0.012 250)">14:20</div></div><div style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;color:oklch(0.40 0.11 152)">+120,00</div></div>
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid oklch(0.93 0.006 250)"><div style="width:40px;height:40px;border-radius:50%;background:oklch(0.95 0.006 250);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600">↑</div><div style="flex:1"><div style="font-size:16px;font-weight:600">«Gülzar» dükany</div><div style="font-size:13px;color:oklch(0.47 0.012 250)">13:05</div></div><div style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums">−48,50</div></div>
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 14px"><div style="width:40px;height:40px;border-radius:50%;background:oklch(0.95 0.006 250);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600">↑</div><div style="flex:1"><div style="font-size:16px;font-weight:600">Güljahan Saparowa</div><div style="font-size:13px;color:oklch(0.47 0.012 250)">düýn 18:02</div></div><div style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums">−60,00</div></div>
+              </div>
+            </div>
+            <div style="position:absolute;right:20px;bottom:180px;width:64px;height:64px;border-radius:20px;background:oklch(0.42 0.14 248);display:flex;align-items:center;justify-content:center;box-shadow:0 14px 30px -8px oklch(0.42 0.14 248 / 0.6)">
+              <img src="./fab-qr.png" alt="Dükanda töle" width="512" height="512" style="width:32px;height:32px;display:block;object-fit:contain;filter:brightness(0) invert(1)">
+            </div>
+            <div style="display:flex;gap:10px;padding:12px 20px 14px;background:#fff;border-top:1px solid oklch(0.93 0.006 250)">
+              <div style="flex:1;height:56px;border-radius:14px;background:oklch(0.93 0.035 248);color:oklch(0.34 0.12 248);font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center">Pul geçir</div>
+              <div style="flex:1;height:56px;border-radius:14px;background:oklch(0.95 0.006 250);font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center">Hasaby doldur</div>
+            </div>
+            <div style="display:flex;border-top:1px solid oklch(0.90 0.006 250);background:#fff;padding:8px 0 30px">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.42 0.14 248)"></div><span style="font-size:11.5px;font-weight:600;color:oklch(0.42 0.14 248)">Esasy</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.80 0.01 250)"></div><span style="font-size:11.5px;color:oklch(0.55 0.012 250)">Taryh</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.80 0.01 250)"></div><span style="font-size:11.5px;color:oklch(0.55 0.012 250)">Profil</span></div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.42 0.14 248);color:#fff">2.2</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Esasy · вариант со speed-dial</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 0 0;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;position:relative;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 20px 14px">
+              <div style="display:flex;align-items:center;gap:9px"><div style="width:28px;height:28px;border-radius:8px;background:oklch(0.42 0.14 248);display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border-radius:50%;background:oklch(0.93 0.06 95)"></div></div><span style="font-size:17px;font-weight:600">Nur Pay</span></div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:6px 10px;border-radius:999px;background:oklch(0.95 0.04 152);color:oklch(0.40 0.11 152)"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.52 0.13 152)"></span>Onlaýn</span>
+                <div style="width:40px;height:40px;border-radius:12px;background:#fff;border:1px solid oklch(0.90 0.006 250);display:flex;align-items:center;justify-content:center"><div style="width:20px;height:20px;background:repeating-conic-gradient(oklch(0.34 0.12 248) 0% 25%,#fff 0% 50%) 0 0/7px 7px;border-radius:2px"></div></div>
+              </div>
+            </div>
+            <div style="padding:0 20px;display:flex;flex-direction:column;gap:14px;flex:1;overflow:hidden">
+              <div style="border-radius:20px;background:#fff;border:1px solid oklch(0.91 0.02 248);padding:20px;display:flex;flex-direction:column;gap:4px">
+                <div style="font-size:13px;color:oklch(0.47 0.012 250)">Soňky sinhronizasiýa: şu gün 14:32</div>
+                <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:52px;font-weight:600;letter-spacing:-0.035em;font-variant-numeric:tabular-nums;line-height:1.1;color:oklch(0.34 0.12 248)">248,50</span><span style="font-size:20px;font-weight:500;color:oklch(0.47 0.012 250)">TMT</span></div>
+                <div style="font-size:13.5px;color:oklch(0.47 0.012 250)">Balans</div>
+              </div>
+              <div style="font-size:17px;font-weight:600;padding-top:2px">Soňky amallar</div>
+              <div style="background:#fff;border-radius:14px;border:1px solid oklch(0.93 0.006 250);overflow:hidden">
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid oklch(0.93 0.006 250)"><div style="width:40px;height:40px;border-radius:50%;background:oklch(0.95 0.04 152);color:oklch(0.40 0.11 152);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600">↓</div><div style="flex:1"><div style="font-size:16px;font-weight:600">Merdan Ataýew</div><div style="font-size:13px;color:oklch(0.47 0.012 250)">14:20</div></div><div style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;color:oklch(0.40 0.11 152)">+120,00</div></div>
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid oklch(0.93 0.006 250)"><div style="width:40px;height:40px;border-radius:50%;background:oklch(0.95 0.006 250);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600">↑</div><div style="flex:1"><div style="font-size:16px;font-weight:600">«Gülzar» dükany</div><div style="font-size:13px;color:oklch(0.47 0.012 250)">13:05</div></div><div style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums">−48,50</div></div>
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 14px"><div style="width:40px;height:40px;border-radius:50%;background:oklch(0.95 0.006 250);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600">↑</div><div style="flex:1"><div style="font-size:16px;font-weight:600">Güljahan Saparowa</div><div style="font-size:13px;color:oklch(0.47 0.012 250)">düýn 18:02</div></div><div style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums">−60,00</div></div>
+              </div>
+            </div>
+            <div style="position:absolute;right:20px;bottom:104px;display:flex;flex-direction:column;align-items:flex-end;gap:10px">
+              <div style="height:48px;border-radius:16px;background:#fff;border:1px solid oklch(0.90 0.006 250);display:flex;align-items:center;gap:10px;padding:0 16px;box-shadow:0 6px 16px -6px oklch(0.30 0.06 250 / 0.25)"><span style="width:22px;height:22px;border-radius:7px;background:oklch(0.93 0.035 248)"></span><span style="font-size:15px;font-weight:600">Hasaby doldur</span></div>
+              <div style="height:48px;border-radius:16px;background:#fff;border:1px solid oklch(0.90 0.006 250);display:flex;align-items:center;gap:10px;padding:0 16px;box-shadow:0 6px 16px -6px oklch(0.30 0.06 250 / 0.25)"><span style="width:22px;height:22px;border-radius:7px;background:oklch(0.93 0.035 248)"></span><span style="font-size:15px;font-weight:600">Pul geçir</span></div>
+              <div style="height:64px;border-radius:20px;background:oklch(0.42 0.14 248);color:#fff;display:flex;align-items:center;gap:12px;padding:0 20px;box-shadow:0 14px 30px -8px oklch(0.42 0.14 248 / 0.6)">
+                <div style="width:30px;height:30px;background:repeating-conic-gradient(#fff 0% 25%,oklch(0.42 0.14 248) 0% 50%) 0 0/10px 10px;border-radius:4px"></div>
+                <span style="font-size:18px;font-weight:600">Dükanda töle</span>
+              </div>
+            </div>
+            <div style="display:flex;border-top:1px solid oklch(0.90 0.006 250);background:#fff;padding:8px 0 30px">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.42 0.14 248)"></div><span style="font-size:11.5px;font-weight:600;color:oklch(0.42 0.14 248)">Esasy</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.80 0.01 250)"></div><span style="font-size:11.5px;color:oklch(0.55 0.012 250)">Taryh</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.80 0.01 250)"></div><span style="font-size:11.5px;color:oklch(0.55 0.012 250)">Profil</span></div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.42 0.14 248);color:#fff">2.3</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Taryh</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 0 0;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 20px 12px"><span style="font-size:22px;font-weight:600">Taryh</span><span style="font-size:14px;font-weight:600;padding:8px 12px;border-radius:999px;background:oklch(0.93 0.035 248);color:oklch(0.34 0.12 248)">Süzgüç</span></div>
+            <div style="padding:0 20px 12px"><div style="display:flex;background:oklch(0.95 0.006 250);border-radius:10px;padding:4px"><div style="flex:1;text-align:center;padding:9px 0;border-radius:8px;background:#fff;font-size:15px;font-weight:600">Hemmesi</div><div style="flex:1;text-align:center;padding:9px 0;font-size:15px;color:oklch(0.47 0.012 250)">Gelen</div><div style="flex:1;text-align:center;padding:9px 0;font-size:15px;color:oklch(0.47 0.012 250)">Giden</div></div></div>
+            <div style="padding:6px 20px;font-size:13px;font-weight:600;letter-spacing:0.06em;color:oklch(0.63 0.01 250);text-transform:uppercase;background:oklch(0.985 0.005 248)">Şu gün</div>
+            <div style="display:flex;align-items:center;gap:12px;padding:13px 20px;border-bottom:1px solid oklch(0.93 0.006 250)"><div style="width:42px;height:42px;border-radius:50%;background:oklch(0.95 0.04 152);color:oklch(0.40 0.11 152);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600">↓</div><div style="flex:1"><div style="font-size:16px;font-weight:600">Merdan Ataýew</div><div style="font-size:13px;color:oklch(0.47 0.012 250)">Geçirim · 14:20</div></div><div style="font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;color:oklch(0.40 0.11 152)">+120,00</div></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:13px 20px;border-bottom:1px solid oklch(0.93 0.006 250)"><div style="width:42px;height:42px;border-radius:50%;background:oklch(0.95 0.006 250);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600">↑</div><div style="flex:1"><div style="font-size:16px;font-weight:600">«Gülzar» dükany</div><div style="font-size:13px;color:oklch(0.47 0.012 250)">Söwda · 13:05</div></div><div style="font-size:18px;font-weight:600;font-variant-numeric:tabular-nums">−48,50</div></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:13px 20px;background:oklch(0.99 0.012 85);border-left:3px dashed oklch(0.60 0.12 75);border-bottom:1px solid oklch(0.93 0.006 250)"><div style="width:42px;height:42px;border-radius:50%;background:oklch(0.955 0.045 80);color:oklch(0.45 0.10 70);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600">↑</div><div style="flex:1"><div style="font-size:16px;font-weight:600">«Altyn» market</div><div style="display:flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:oklch(0.45 0.10 70)"><span style="width:6px;height:6px;border-radius:50%;background:oklch(0.60 0.12 75)"></span>Garaşylýar · 12:47</div></div><div style="font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;color:oklch(0.45 0.10 70)">−15,00</div></div>
+            <div style="padding:6px 20px;font-size:13px;font-weight:600;letter-spacing:0.06em;color:oklch(0.63 0.01 250);text-transform:uppercase;background:oklch(0.985 0.005 248)">19 sentýabr</div>
+            <div style="display:flex;align-items:center;gap:12px;padding:13px 20px;border-bottom:1px solid oklch(0.93 0.006 250)"><div style="width:42px;height:42px;border-radius:50%;background:oklch(0.95 0.006 250);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600">↑</div><div style="flex:1"><div style="font-size:16px;font-weight:600">Güljahan Saparowa</div><div style="font-size:13px;color:oklch(0.47 0.012 250)">Geçirim · 18:02</div></div><div style="font-size:18px;font-weight:600;font-variant-numeric:tabular-nums">−60,00</div></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:13px 20px"><div style="width:42px;height:42px;border-radius:50%;background:oklch(0.95 0.04 152);color:oklch(0.40 0.11 152);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600">↓</div><div style="flex:1"><div style="font-size:16px;font-weight:600">Hasaby doldurmak</div><div style="font-size:13px;color:oklch(0.47 0.012 250)">Işjeňleşdirme kody · 09:14</div></div><div style="font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;color:oklch(0.40 0.11 152)">+200,00</div></div>
+            <div style="flex:1"></div>
+            <div style="display:flex;border-top:1px solid oklch(0.90 0.006 250);background:#fff;padding:8px 0 30px">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.80 0.01 250)"></div><span style="font-size:11.5px;color:oklch(0.55 0.012 250)">Esasy</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.42 0.14 248)"></div><span style="font-size:11.5px;font-weight:600;color:oklch(0.42 0.14 248)">Taryh</span></div>
+              
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.80 0.01 250)"></div><span style="font-size:11.5px;color:oklch(0.55 0.012 250)">Profil</span></div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.42 0.14 248);color:#fff">2.4</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Süzgüç</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 0 0;background:oklch(0.24 0.006 250 / 0.34);display:flex;flex-direction:column;justify-content:flex-end;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="background:#fff;border-radius:24px 24px 0 0;padding:18px 20px 40px;display:flex;flex-direction:column;gap:18px;box-shadow:0 -12px 32px -8px oklch(0.30 0.06 250 / 0.22)">
+              <div style="width:44px;height:5px;border-radius:999px;background:oklch(0.88 0.008 250);align-self:center"></div>
+              <div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font-size:22px;font-weight:600">Süzgüç</span><span style="font-size:15px;font-weight:500;color:oklch(0.42 0.14 248)">Arassala</span></div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <span style="font-size:14px;font-weight:600;color:oklch(0.35 0.012 250)">Döwür</span>
+                <div style="display:flex;gap:8px">
+                  <span style="font-size:14px;font-weight:600;padding:9px 14px;border-radius:999px;background:oklch(0.93 0.035 248);color:oklch(0.34 0.12 248)">Şu gün</span>
+                  <span style="font-size:14px;font-weight:500;padding:9px 14px;border-radius:999px;background:oklch(0.985 0.005 248);border:1px solid oklch(0.90 0.006 250)">7 gün</span>
+                  <span style="font-size:14px;font-weight:500;padding:9px 14px;border-radius:999px;background:oklch(0.985 0.005 248);border:1px solid oklch(0.90 0.006 250)">Aý</span>
+                </div>
+                <div style="display:flex;gap:10px;align-items:center">
+                  <div style="flex:1;height:52px;border-radius:10px;border:1.5px solid oklch(0.88 0.008 250);display:flex;align-items:center;padding:0 12px;font-size:16px;font-variant-numeric:tabular-nums">01.09.2026</div>
+                  <span style="font-size:16px;color:oklch(0.63 0.01 250)">—</span>
+                  <div style="flex:1;height:52px;border-radius:10px;border:1.5px solid oklch(0.88 0.008 250);display:flex;align-items:center;padding:0 12px;font-size:16px;font-variant-numeric:tabular-nums">20.09.2026</div>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <span style="font-size:14px;font-weight:600;color:oklch(0.35 0.012 250)">Möçber, TMT</span>
+                <div style="display:flex;gap:10px;align-items:center">
+                  <div style="flex:1;height:52px;border-radius:10px;border:1.5px solid oklch(0.88 0.008 250);display:flex;align-items:center;padding:0 12px;font-size:16px;font-variant-numeric:tabular-nums">10</div>
+                  <span style="font-size:16px;color:oklch(0.63 0.01 250)">—</span>
+                  <div style="flex:1;height:52px;border-radius:10px;border:1.5px solid oklch(0.88 0.008 250);display:flex;align-items:center;padding:0 12px;font-size:16px;color:oklch(0.63 0.01 250);font-variant-numeric:tabular-nums">500</div>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <span style="font-size:14px;font-weight:600;color:oklch(0.35 0.012 250)">Görnüşi</span>
+                <div style="display:flex;background:oklch(0.95 0.006 250);border-radius:10px;padding:4px"><div style="flex:1;text-align:center;padding:10px 0;border-radius:8px;background:#fff;font-size:15px;font-weight:600">Hemmesi</div><div style="flex:1;text-align:center;padding:10px 0;font-size:15px;color:oklch(0.47 0.012 250)">Gelen</div><div style="flex:1;text-align:center;padding:10px 0;font-size:15px;color:oklch(0.47 0.012 250)">Giden</div></div>
+              </div>
+              <div style="height:56px;border-radius:14px;background:oklch(0.42 0.14 248);color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Ulan</div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:18px;background:#fff;border:1px solid oklch(0.91 0.006 250);border-radius:22px;padding:26px 26px 30px;box-shadow:0 1px 2px oklch(0.3 0.02 250 / 0.04);flex:0 0 auto;width:462px">
+    <div style="display:flex;align-items:center;gap:12px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;padding:4px 9px;border-radius:7px;background:oklch(0.42 0.14 248);color:#fff">03</span><span style="font-size:13px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:oklch(0.42 0.14 248)">Müşderi — dükanda töleg (сценарий С1)</span><span style="flex:1;height:1px;background:oklch(0.90 0.006 250)"></span></div>
+    <p style="margin:0;max-width:78ch;font-size:14.5px;line-height:1.6;color:oklch(0.35 0.012 250)">Клиент задаёт лимит и показывает одноразовый QR — в этом флоу PIN не вводится. Дальше действует кассир — экраны 7.2–7.3. Экран ввода PIN — общий компонент, смотри группу 10.</p>
+    <div style="display:flex;flex-direction:column;gap:30px">
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.42 0.14 248);color:#fff">3.1</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Çäk — лимит для кассира</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 20px 44px;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;gap:14px;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="display:flex;align-items:center;gap:12px;padding:6px 0"><span style="font-size:22px;color:oklch(0.47 0.012 250)">‹</span><span style="font-size:18px;font-weight:600">Dükanda töle</span></div>
+            <div style="font-size:15px;line-height:1.5;color:oklch(0.47 0.012 250)">Kassire näçe möçbere rugsat berýärsiňiz? Şundan köp alyp bilmez.</div>
+            <div style="display:flex;align-items:baseline;justify-content:center;gap:8px;padding:16px 0"><span style="font-size:56px;font-weight:600;letter-spacing:-0.04em;font-variant-numeric:tabular-nums">50,00</span><span style="font-size:22px;font-weight:500;color:oklch(0.47 0.012 250)">TMT</span></div>
+            <div style="text-align:center;font-size:14px;color:oklch(0.47 0.012 250);font-variant-numeric:tabular-nums">Balans: 248,50 TMT</div>
+            <div style="display:flex;gap:8px;justify-content:center">
+              <span style="font-size:15px;font-weight:600;padding:9px 16px;border-radius:999px;background:oklch(0.985 0.005 248);border:1px solid oklch(0.90 0.006 250);font-variant-numeric:tabular-nums">20</span>
+              <span style="font-size:15px;font-weight:600;padding:9px 16px;border-radius:999px;background:oklch(0.93 0.035 248);color:oklch(0.34 0.12 248);font-variant-numeric:tabular-nums">50</span>
+              <span style="font-size:15px;font-weight:600;padding:9px 16px;border-radius:999px;background:oklch(0.985 0.005 248);border:1px solid oklch(0.90 0.006 250);font-variant-numeric:tabular-nums">100</span>
+            </div>
+            <div style="flex:1"></div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">1</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">2</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">3</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">4</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">5</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">6</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">7</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">8</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">9</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">,</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">0</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.95 0.006 250);display:flex;align-items:center;justify-content:center;font-size:23px">⌫</div>
+            </div>
+            <div style="height:56px;border-radius:14px;background:oklch(0.42 0.14 248);color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Indiki</div>
+          </div>
+        </x-import>
+      </div>
+
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.42 0.14 248);color:#fff">3.2</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Töleg QR · 60 sek</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 20px 44px;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;align-items:center;gap:14px;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="align-self:stretch;display:flex;align-items:center;justify-content:space-between;padding:6px 0">
+              <span style="font-size:22px;color:oklch(0.47 0.012 250)">‹</span>
+              <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:0.06em;padding:6px 10px;border-radius:999px;background:oklch(0.93 0.035 248);color:oklch(0.34 0.12 248)">BIR GEZEKLIK</span>
+              <span style="width:22px"></span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+              <div style="font-size:14px;color:oklch(0.47 0.012 250)">Rugsat berlen çäk</div>
+              <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:52px;font-weight:600;letter-spacing:-0.04em;font-variant-numeric:tabular-nums;line-height:1.1">50,00</span><span style="font-size:22px;font-weight:500;color:oklch(0.47 0.012 250)">TMT</span></div>
+            </div>
+            <div style="background:#fff;border:2px solid oklch(0.42 0.14 248);border-radius:26px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:10px">
+              <div style="width:212px;height:212px;background:repeating-conic-gradient(oklch(0.42 0.14 248) 0% 25%,#fff 0% 50%) 0 0/19px 19px;border-radius:4px"></div>
+              <div style="font-size:13.5px;font-weight:700;letter-spacing:0.1em;color:oklch(0.34 0.12 248)">BIR GEZEKLIK NUR PAY QR</div>
+            </div>
+            <div style="align-self:stretch;display:flex;flex-direction:column;gap:8px;padding-top:2px">
+              <div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font-size:15px;color:oklch(0.47 0.012 250)">Kodyň möhleti</span><span style="font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;color:oklch(0.34 0.12 248)">0:54</span></div>
+              <div style="height:6px;border-radius:999px;background:oklch(0.93 0.006 250);overflow:hidden"><div style="width:88%;height:100%;background:oklch(0.42 0.14 248)"></div></div>
+            </div>
+            <div style="font-size:15px;line-height:1.5;text-align:center;color:oklch(0.47 0.012 250);max-width:34ch">Kassire görkeziň. Kod diňe bir gezek işleýär.</div>
+            <div style="flex:1"></div>
+            <div style="align-self:stretch;height:56px;border-radius:14px;background:oklch(0.42 0.14 248);color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Täzele</div>
+          </div>
+        </x-import>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:18px;background:#fff;border:1px solid oklch(0.91 0.006 250);border-radius:22px;padding:26px 26px 30px;box-shadow:0 1px 2px oklch(0.3 0.02 250 / 0.04);flex:0 0 auto;width:462px">
+    <div style="display:flex;align-items:center;gap:12px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;padding:4px 9px;border-radius:7px;background:oklch(0.42 0.14 248);color:#fff">04</span><span style="font-size:13px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:oklch(0.42 0.14 248)">Müşderi — pul geçirmek (сценарий С2)</span><span style="flex:1;height:1px;background:oklch(0.90 0.006 250)"></span></div>
+    <p style="margin:0;max-width:78ch;font-size:14.5px;line-height:1.6;color:oklch(0.35 0.012 250)">Перевод другому пользователю. Требует сети: без неё шаг не начинается — экран 8.5.</p>
+    <div style="display:flex;flex-direction:column;gap:30px">
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.42 0.14 248);color:#fff">4.1</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Kontaktlar</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 0 44px;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;gap:14px;position:relative;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="padding:6px 20px 0;display:flex;align-items:center;gap:12px"><span style="font-size:22px;color:oklch(0.47 0.012 250)">‹</span><span style="font-size:18px;font-weight:600">Pul geçir</span></div>
+            <div style="padding:0 20px"><div style="height:52px;border-radius:10px;background:oklch(0.968 0.006 248);border:1.5px solid oklch(0.90 0.006 250);display:flex;align-items:center;padding:0 14px;font-size:16px;color:oklch(0.63 0.01 250)">At ýa-da belgi boýunça gözläň</div></div>
+            <div style="padding:0 20px;font-size:13px;font-weight:600;letter-spacing:0.06em;color:oklch(0.63 0.01 250);text-transform:uppercase">Soňkylar</div>
+            <div style="display:flex;flex-direction:column">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 20px"><div style="width:44px;height:44px;border-radius:50%;background:oklch(0.93 0.035 248);color:oklch(0.34 0.12 248);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600">MA</div><div style="flex:1"><div style="font-size:17px;font-weight:600">Merdan Ataýew</div><div style="font-size:14px;color:oklch(0.47 0.012 250);font-variant-numeric:tabular-nums">+993 61 22 08 14</div></div></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 20px"><div style="width:44px;height:44px;border-radius:50%;background:oklch(0.93 0.035 248);color:oklch(0.34 0.12 248);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600">GS</div><div style="flex:1"><div style="font-size:17px;font-weight:600">Güljahan Saparowa</div><div style="font-size:14px;color:oklch(0.47 0.012 250);font-variant-numeric:tabular-nums">+993 65 40 11 73</div></div></div>
+              <div style="padding:14px 20px 8px;font-size:13px;font-weight:600;letter-spacing:0.06em;color:oklch(0.63 0.01 250);text-transform:uppercase">Ähli kontaktlar</div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 20px"><div style="width:44px;height:44px;border-radius:50%;background:oklch(0.95 0.006 250);color:oklch(0.35 0.012 250);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600">AB</div><div style="flex:1"><div style="font-size:17px;font-weight:600">Aşyr Berdiýew</div><div style="font-size:14px;color:oklch(0.47 0.012 250);font-variant-numeric:tabular-nums">+993 62 77 45 90</div></div></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 20px"><div style="width:44px;height:44px;border-radius:50%;background:oklch(0.95 0.006 250);color:oklch(0.35 0.012 250);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600">OÝ</div><div style="flex:1"><div style="font-size:17px;font-weight:600">Oguljan Ýazowa</div><div style="font-size:14px;color:oklch(0.47 0.012 250);font-variant-numeric:tabular-nums">+993 63 15 62 28</div></div></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 20px"><div style="width:44px;height:44px;border-radius:50%;background:oklch(0.95 0.006 250);color:oklch(0.35 0.012 250);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600">ŞN</div><div style="flex:1"><div style="font-size:17px;font-weight:600">Şöhrat Nuryýew</div><div style="font-size:14px;color:oklch(0.47 0.012 250);font-variant-numeric:tabular-nums">+993 64 30 19 55</div></div></div>
+            </div>
+            <div style="flex:1"></div>
+            <div style="position:absolute;right:20px;bottom:44px;width:64px;height:64px;border-radius:20px;background:oklch(0.42 0.14 248);display:flex;align-items:center;justify-content:center;box-shadow:0 14px 30px -8px oklch(0.42 0.14 248 / 0.6)">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V4a1 1 0 0 1 1-1h3"></path><path d="M17 3h3a1 1 0 0 1 1 1v3"></path><path d="M21 17v3a1 1 0 0 1-1 1h-3"></path><path d="M7 21H4a1 1 0 0 1-1-1v-3"></path><line x1="3" y1="12" x2="21" y2="12"></line></svg>
+            </div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.42 0.14 248);color:#fff">4.2</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Möçber</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 20px 44px;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;gap:14px;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="display:flex;align-items:center;gap:12px;padding:6px 0"><span style="font-size:22px;color:oklch(0.47 0.012 250)">‹</span><span style="font-size:18px;font-weight:600">Möçber</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:oklch(0.968 0.006 248)"><div style="width:40px;height:40px;border-radius:50%;background:oklch(0.93 0.035 248);color:oklch(0.34 0.12 248);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600">MA</div><div style="flex:1"><div style="font-size:16px;font-weight:600">Merdan Ataýew</div><div style="font-size:13.5px;color:oklch(0.47 0.012 250);font-variant-numeric:tabular-nums">+993 61 22 08 14</div></div><span style="font-size:14px;font-weight:500;color:oklch(0.42 0.14 248)">Üýtget</span></div>
+            <div style="display:flex;align-items:baseline;justify-content:center;gap:8px;padding:18px 0"><span style="font-size:56px;font-weight:600;letter-spacing:-0.04em;font-variant-numeric:tabular-nums">120,00</span><span style="font-size:22px;font-weight:500;color:oklch(0.47 0.012 250)">TMT</span></div>
+            <div style="text-align:center;font-size:14px;color:oklch(0.47 0.012 250);font-variant-numeric:tabular-nums">Balans: 248,50 TMT · Komissiýa 0,00</div>
+            <div style="flex:1"></div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">1</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">2</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">3</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">4</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">5</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">6</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">7</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">8</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">9</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">,</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">0</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.95 0.006 250);display:flex;align-items:center;justify-content:center;font-size:23px">⌫</div>
+            </div>
+            <div style="height:56px;border-radius:14px;background:oklch(0.42 0.14 248);color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Dowam et</div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.42 0.14 248);color:#fff">4.3</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Geçirimi tassykla</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 20px 44px;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;gap:18px;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="display:flex;align-items:center;gap:12px;padding:6px 0"><span style="font-size:22px;color:oklch(0.47 0.012 250)">‹</span><span style="font-size:18px;font-weight:600">Geçirimi tassykla</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 0">
+              <div style="width:64px;height:64px;border-radius:50%;background:oklch(0.93 0.035 248);color:oklch(0.34 0.12 248);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:600">MA</div>
+              <div style="font-size:20px;font-weight:600">Merdan Ataýew</div>
+              <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:48px;font-weight:600;letter-spacing:-0.035em;font-variant-numeric:tabular-nums">120,00</span><span style="font-size:20px;font-weight:500;color:oklch(0.47 0.012 250)">TMT</span></div>
+            </div>
+            <div style="border-radius:14px;border:1px solid oklch(0.93 0.006 250);overflow:hidden">
+              <div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid oklch(0.93 0.006 250)"><span style="font-size:15px;color:oklch(0.47 0.012 250)">Kime</span><span style="font-size:15px;font-weight:600;font-variant-numeric:tabular-nums">+993 61 22 08 14</span></div>
+              <div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid oklch(0.93 0.006 250)"><span style="font-size:15px;color:oklch(0.47 0.012 250)">Komissiýa</span><span style="font-size:15px;font-weight:600;font-variant-numeric:tabular-nums">0,00 TMT</span></div>
+              <div style="display:flex;justify-content:space-between;padding:14px"><span style="font-size:15px;color:oklch(0.47 0.012 250)">Jemi</span><span style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums">120,00 TMT</span></div>
+            </div>
+            <div style="flex:1"></div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="height:56px;border-radius:14px;background:oklch(0.42 0.14 248);color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Tassykla</div>
+              <div style="height:56px;border-radius:14px;background:#fff;border:1.5px solid oklch(0.86 0.008 250);font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Ýatyr</div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:18px;background:#fff;border:1px solid oklch(0.91 0.006 250);border-radius:22px;padding:26px 26px 30px;box-shadow:0 1px 2px oklch(0.3 0.02 250 / 0.04);flex:0 0 auto;width:462px">
+    <div style="display:flex;align-items:center;gap:12px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;padding:4px 9px;border-radius:7px;background:oklch(0.42 0.14 248);color:#fff">05</span><span style="font-size:13px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:oklch(0.42 0.14 248)">Müşderi — hasaby doldurmak</span><span style="flex:1;height:1px;background:oklch(0.90 0.006 250)"></span></div>
+    <p style="margin:0;max-width:78ch;font-size:14.5px;line-height:1.6;color:oklch(0.35 0.012 250)">Два способа: код активации работает офлайн и встаёт в очередь, пополнение у агента идёт через публичный QR.</p>
+    <div style="display:flex;flex-direction:column;gap:30px">
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.42 0.14 248);color:#fff">5.1</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Usuly saýlaň</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 20px 44px;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;gap:16px;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="display:flex;align-items:center;gap:12px;padding:6px 0"><span style="font-size:22px;color:oklch(0.47 0.012 250)">‹</span><span style="font-size:18px;font-weight:600">Hasaby doldur</span></div>
+            <div style="font-size:15px;line-height:1.5;color:oklch(0.47 0.012 250)">Usuly saýlaň</div>
+            <div style="border-radius:16px;border:2px solid oklch(0.42 0.14 248);background:oklch(0.97 0.016 248);padding:18px;display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:12px;background:oklch(0.42 0.14 248);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600">##</div><div style="font-size:19px;font-weight:600">Işjeňleşdirme kody</div></div>
+              <div style="font-size:14.5px;line-height:1.5;color:oklch(0.35 0.012 250)">Satyn alan kartaňyzdaky 12 belgili kody giriziň. Kod internet gelende işlener.</div>
+            </div>
+            <div style="border-radius:16px;border:1.5px solid oklch(0.90 0.006 250);padding:18px;display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:12px;background:oklch(0.95 0.006 250);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:600">QR</div><div style="font-size:19px;font-weight:600">Agentden doldur</div></div>
+              <div style="font-size:14.5px;line-height:1.5;color:oklch(0.35 0.012 250)">Hemişelik QR kodyňyzy agente görkeziň — pul hasabyňyza geçer.</div>
+            </div>
+            <div style="flex:1"></div>
+            <div style="height:56px;border-radius:14px;background:oklch(0.42 0.14 248);color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Dowam et</div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.42 0.14 248);color:#fff">5.2</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Işjeňleşdirme kody</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 20px 44px;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;gap:16px;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="display:flex;align-items:center;gap:12px;padding:6px 0"><span style="font-size:22px;color:oklch(0.47 0.012 250)">‹</span><span style="font-size:18px;font-weight:600">Işjeňleşdirme kody</span></div>
+            <div style="font-size:15px;line-height:1.5;color:oklch(0.47 0.012 250)">Kartanyň arka ýüzündäki gorag gatlagyny süpüriň we 12 belgini giriziň</div>
+            <div style="height:64px;border-radius:12px;border:2px solid oklch(0.42 0.14 248);box-shadow:0 0 0 4px oklch(0.42 0.14 248 / 0.12);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:24px;letter-spacing:0.08em;font-variant-numeric:tabular-nums">4820 7315 <span style="color:oklch(0.72 0.01 250)">····</span></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;background:oklch(0.93 0.006 250)"><span style="width:10px;height:10px;border-radius:50%;background:oklch(0.55 0.012 250);flex:none"></span><span style="font-size:14px;line-height:1.45;color:oklch(0.35 0.012 250)">Aragatnaşyk ýok. Kod internet gelende işlener.</span></div>
+            <div style="flex:1"></div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">1</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">2</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">3</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">4</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">5</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">6</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">7</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">8</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">9</div>
+              <div style="height:66px"></div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">0</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.95 0.006 250);display:flex;align-items:center;justify-content:center;font-size:23px">⌫</div>
+            </div>
+            <div style="height:56px;border-radius:14px;background:oklch(0.93 0.004 250);color:oklch(0.70 0.008 250);font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Hasaby doldur</div>
+          </div>
+        </x-import>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:18px;background:#fff;border:1px solid oklch(0.91 0.006 250);border-radius:22px;padding:26px 26px 30px;box-shadow:0 1px 2px oklch(0.3 0.02 250 / 0.04);flex:0 0 auto;width:462px">
+    <div style="display:flex;align-items:center;gap:12px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;padding:4px 9px;border-radius:7px;background:oklch(0.42 0.14 248);color:#fff">06</span><span style="font-size:13px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:oklch(0.42 0.14 248)">Müşderi — QR we çek</span><span style="flex:1;height:1px;background:oklch(0.90 0.006 250)"></span></div>
+    <p style="margin:0;max-width:78ch;font-size:14.5px;line-height:1.6;color:oklch(0.35 0.012 250)">Публичный QR не меняется и не имеет таймера — им получают деньги. Экран получения — отдельная группа ниже.</p>
+    <div style="display:flex;flex-direction:column;gap:30px">
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.42 0.14 248);color:#fff">6.1</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Meniň QR kodum</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 20px 44px;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;align-items:center;gap:16px;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="align-self:stretch;display:flex;align-items:center;justify-content:space-between;padding:6px 0"><span style="font-size:18px;font-weight:600">Meniň QR kodum</span><span style="font-size:12px;font-weight:600;letter-spacing:0.06em;color:oklch(0.34 0.12 248)">HEMIŞELIK</span></div>
+            <div style="background:oklch(0.42 0.14 248);border-radius:28px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:12px">
+              <div style="background:#fff;border-radius:20px;padding:18px">
+                <div style="width:216px;height:216px;background:repeating-conic-gradient(oklch(0.42 0.14 248) 0% 25%,#fff 0% 50%) 0 0/19px 19px;border-radius:4px"></div>
+              </div>
+              <div style="font-size:14px;font-weight:700;letter-spacing:0.1em;color:#fff;padding:0 0 8px">NUR PAY QR</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px">
+              <div style="font-size:20px;font-weight:600">Aýna Gurbanowa</div>
+              <div style="font-size:15px;color:oklch(0.47 0.012 250);font-variant-numeric:tabular-nums">+993 65 12 34 56</div>
+            </div>
+            <div style="font-size:15px;line-height:1.55;text-align:center;color:oklch(0.47 0.012 250);max-width:36ch">Bu kod üýtgemeýär. Skrinşot alyp, islän adamyňyza iberip bilersiňiz — size pul geçirer.</div>
+            <div style="flex:1"></div>
+            <div style="align-self:stretch;display:flex;flex-direction:column;gap:10px">
+              <div style="height:56px;border-radius:14px;background:oklch(0.42 0.14 248);color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Paýlaş</div>
+              <div style="height:56px;border-radius:14px;background:#fff;border:1.5px solid oklch(0.86 0.008 250);font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Surata al</div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:18px;background:#fff;border:1px solid oklch(0.91 0.006 250);border-radius:22px;padding:26px 26px 30px;box-shadow:0 1px 2px oklch(0.3 0.02 250 / 0.04);flex:0 0 auto;width:462px">
+    <div style="display:flex;align-items:center;gap:12px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;padding:4px 9px;border-radius:7px;background:oklch(0.40 0.10 165);color:#fff">07</span><span style="font-size:13px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:oklch(0.40 0.10 165)">Söwda nokady — мерчант</span><span style="flex:1;height:1px;background:oklch(0.90 0.006 250)"></span></div>
+    <p style="margin:0;max-width:78ch;font-size:14.5px;line-height:1.6;color:oklch(0.35 0.012 250)">Отдельный акцент и оттенок фона. Направление денег задаёт шапка сканера: зелёная — приём, графитовая — возврат.</p>
+    <div style="display:flex;flex-direction:column;gap:30px">
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.40 0.10 165);color:#fff">7.1</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Esasy · düşewünt</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 0 0;background:oklch(0.985 0.005 165);display:flex;flex-direction:column;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 20px 14px">
+              <div style="display:flex;align-items:center;gap:9px"><div style="width:28px;height:28px;border-radius:8px;background:oklch(0.40 0.10 165);display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border-radius:50%;background:oklch(0.93 0.06 95)"></div></div><span style="font-size:17px;font-weight:600">«Gülzar» dükany</span></div>
+              <span style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:6px 10px;border-radius:999px;background:oklch(0.93 0.035 165);color:oklch(0.31 0.09 165)"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.40 0.10 165)"></span>Söwda nokady</span>
+              <div style="width:36px;height:36px;border-radius:10px;background:oklch(0.93 0.035 165);display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="oklch(0.31 0.09 165)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><line x1="14" y1="14" x2="14" y2="21"></line><line x1="21" y1="14" x2="21" y2="21"></line><line x1="14" y1="17.5" x2="21" y2="17.5"></line></svg></div>
+            </div>
+            <div style="padding:0 20px;display:flex;flex-direction:column;gap:14px;flex:1;overflow:hidden">
+              <div style="border-radius:20px;background:oklch(0.40 0.10 165);padding:20px;color:#fff;display:flex;flex-direction:column;gap:14px">
+                <div style="display:flex;flex-direction:column;gap:3px">
+                  <div style="font-size:13.5px;color:oklch(0.88 0.035 165)">Şu günki düşewünt · 20 sentýabr</div>
+                  <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:48px;font-weight:600;letter-spacing:-0.035em;font-variant-numeric:tabular-nums;line-height:1.1">1 240,00</span><span style="font-size:20px;font-weight:500;color:oklch(0.88 0.035 165)">TMT</span></div>
+                </div>
+                <div style="display:flex;gap:10px;border-top:1px solid oklch(0.88 0.035 165 / 0.28);padding-top:12px">
+                  <div style="flex:1"><div style="font-size:13px;color:oklch(0.88 0.035 165)">Amallar</div><div style="font-size:20px;font-weight:600;font-variant-numeric:tabular-nums">37</div></div>
+                  <div style="flex:1"><div style="font-size:13px;color:oklch(0.88 0.035 165)">Hasap galyndysy</div><div style="font-size:20px;font-weight:600;font-variant-numeric:tabular-nums">8 410,00</div></div>
+                </div>
+              </div>
+              <div style="height:60px;border-radius:14px;background:oklch(0.40 0.10 165);color:#fff;font-size:18px;font-weight:600;display:flex;align-items:center;justify-content:center">Töleg kabul et</div>
+              <div style="height:56px;border-radius:14px;background:#fff;border:1.5px solid oklch(0.86 0.045 165);color:oklch(0.31 0.09 165);font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Yzyna gaýtar</div>
+              <div style="font-size:17px;font-weight:600;padding-top:4px">Soňky amallar</div>
+              <div style="background:#fff;border-radius:14px;border:1px solid oklch(0.93 0.006 250);overflow:hidden">
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid oklch(0.93 0.006 250)"><div style="width:40px;height:40px;border-radius:50%;background:oklch(0.95 0.04 152);color:oklch(0.40 0.11 152);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600">↓</div><div style="flex:1"><div style="font-size:16px;font-weight:600">Aýna Gurbanowa</div><div style="font-size:13px;color:oklch(0.47 0.012 250)">13:05</div></div><div style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;color:oklch(0.40 0.11 152)">+48,50</div></div>
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 14px"><div style="width:40px;height:40px;border-radius:50%;background:oklch(0.95 0.006 250);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600">↑</div><div style="flex:1"><div style="font-size:16px;font-weight:600">Aşyr Berdiýew</div><div style="font-size:13px;color:oklch(0.47 0.012 250)">Yzyna gaýtaryldy · 12:40</div></div><div style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums">−22,00</div></div>
+              </div>
+            </div>
+            <div style="display:flex;border-top:1px solid oklch(0.90 0.006 250);background:#fff;padding:8px 0 30px">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.40 0.10 165)"></div><span style="font-size:11.5px;font-weight:600;color:oklch(0.40 0.10 165)">Esasy</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.80 0.01 250)"></div><span style="font-size:11.5px;color:oklch(0.55 0.012 250)">Taryh</span></div>
+              
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.80 0.01 250)"></div><span style="font-size:11.5px;color:oklch(0.55 0.012 250)">Profil</span></div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.40 0.10 165);color:#fff">7.2</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Möçber</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 20px 44px;background:oklch(0.985 0.005 165);display:flex;flex-direction:column;gap:14px;position:relative;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="display:flex;align-items:center;gap:12px;padding:6px 0"><span style="font-size:22px;color:oklch(0.47 0.012 250)">‹</span><span style="font-size:18px;font-weight:600">Töleg kabul et</span></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 2px 14px;border-bottom:1px solid oklch(0.90 0.006 250)"><span style="width:26px;height:26px;border-radius:50%;background:oklch(0.93 0.035 165);color:oklch(0.31 0.09 165);font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0">↓</span><span style="font-size:13.5px;line-height:1.4;color:oklch(0.47 0.012 250)">Müşderiniň QR kody möçberi saklamaýar — ilki möçberi giriziň</span></div>
+            <div style="display:flex;align-items:baseline;justify-content:center;gap:8px;padding:14px 0"><span style="font-size:56px;font-weight:600;letter-spacing:-0.04em;font-variant-numeric:tabular-nums">48,50</span><span style="font-size:22px;font-weight:500;color:oklch(0.47 0.012 250)">TMT</span></div>
+            <div style="flex:1"></div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 165);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">1</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 165);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">2</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 165);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">3</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 165);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">4</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 165);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">5</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 165);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">6</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 165);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">7</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 165);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">8</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 165);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">9</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 165);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">,</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.962 0.007 165);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:500">0</div>
+              <div style="height:66px;border-radius:12px;background:oklch(0.95 0.006 250);display:flex;align-items:center;justify-content:center;font-size:23px">⌫</div>
+            </div>
+            <div style="position:absolute;right:20px;bottom:104px;width:64px;height:64px;border-radius:20px;background:oklch(0.40 0.10 165);display:flex;align-items:center;justify-content:center;box-shadow:0 14px 30px -8px oklch(0.40 0.10 165 / 0.55)">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V4a1 1 0 0 1 1-1h3"></path><path d="M17 3h3a1 1 0 0 1 1 1v3"></path><path d="M21 17v3a1 1 0 0 1-1 1h-3"></path><path d="M7 21H4a1 1 0 0 1-1-1v-3"></path><line x1="3" y1="12" x2="21" y2="12"></line></svg>
+            </div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.40 0.10 165);color:#fff">7.3</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Skaner · töleg kabul et</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="1" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 0 44px;background:oklch(0.20 0.012 250);display:flex;flex-direction:column;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#fff">
+            <div style="padding:10px 20px 14px;display:flex;align-items:center;gap:12px"><span style="font-size:22px;color:oklch(0.80 0.01 250)">‹</span><span style="font-size:18px;font-weight:600">Çekmek</span></div>
+            <div style="margin:0 20px;padding:0 0 4px;display:flex;align-items:center;gap:11px">
+              <span style="width:26px;height:26px;border-radius:50%;background:oklch(0.52 0.13 152 / 0.3);color:oklch(0.80 0.15 152);font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0">↓</span>
+              <div style="flex:1"><div style="display:flex;align-items:baseline;gap:5px"><span style="font-size:21px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.02em">48,50</span><span style="font-size:13px;font-weight:500;color:oklch(0.75 0.02 250)">TMT</span></div></div>
+            </div>
+            <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:24px">
+              <div style="width:260px;height:260px;position:relative;background:oklch(0.26 0.012 250);border-radius:12px">
+                <div style="position:absolute;top:0;left:0;width:48px;height:48px;border-top:4px solid oklch(0.52 0.13 152);border-left:4px solid oklch(0.52 0.13 152);border-radius:12px 0 0 0"></div>
+                <div style="position:absolute;top:0;right:0;width:48px;height:48px;border-top:4px solid oklch(0.52 0.13 152);border-right:4px solid oklch(0.52 0.13 152);border-radius:0 12px 0 0"></div>
+                <div style="position:absolute;bottom:0;left:0;width:48px;height:48px;border-bottom:4px solid oklch(0.52 0.13 152);border-left:4px solid oklch(0.52 0.13 152);border-radius:0 0 0 12px"></div>
+                <div style="position:absolute;bottom:0;right:0;width:48px;height:48px;border-bottom:4px solid oklch(0.52 0.13 152);border-right:4px solid oklch(0.52 0.13 152);border-radius:0 0 12px 0"></div>
+                <div style="position:absolute;top:50%;left:12px;right:12px;height:2px;background:oklch(0.52 0.13 152)"></div>
+              </div>
+            </div>
+            <div style="padding:0 20px"><div style="height:56px;border-radius:14px;background:oklch(0.30 0.012 250);border:1.5px solid oklch(0.42 0.012 250);color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Möçberi üýtget</div></div>
+            <div style="padding:14px 20px 0;font-size:13px;line-height:1.4;text-align:center;color:oklch(0.62 0.008 250)">Bir gezeklik QR-ny skanirläň</div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.40 0.10 165);color:#fff">7.4</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Skaner · pul geçir</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="1" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 0 44px;background:oklch(0.20 0.012 250);display:flex;flex-direction:column;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#fff">
+            <div style="padding:10px 20px 14px;display:flex;align-items:center;gap:12px"><span style="font-size:22px;color:oklch(0.80 0.01 250)">‹</span><span style="font-size:18px;font-weight:600">Ugratma</span></div>
+            <div style="margin:0 20px;padding:0 0 4px;display:flex;align-items:center;gap:11px">
+              <span style="width:26px;height:26px;border-radius:50%;background:oklch(0.98 0.004 250 / 0.18);color:oklch(0.85 0.008 250);font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0">↑</span>
+              <div style="flex:1"><div style="display:flex;align-items:baseline;gap:5px"><span style="font-size:21px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.02em">22,00</span><span style="font-size:13px;font-weight:500;color:oklch(0.85 0.008 250)">TMT</span></div></div>
+            </div>
+            <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:24px">
+              <div style="width:260px;height:260px;position:relative;background:oklch(0.26 0.012 250);border-radius:12px">
+                <div style="position:absolute;top:0;left:0;width:48px;height:48px;border-top:4px solid oklch(0.78 0.008 250);border-left:4px solid oklch(0.78 0.008 250);border-radius:12px 0 0 0"></div>
+                <div style="position:absolute;top:0;right:0;width:48px;height:48px;border-top:4px solid oklch(0.78 0.008 250);border-right:4px solid oklch(0.78 0.008 250);border-radius:0 12px 0 0"></div>
+                <div style="position:absolute;bottom:0;left:0;width:48px;height:48px;border-bottom:4px solid oklch(0.78 0.008 250);border-left:4px solid oklch(0.78 0.008 250);border-radius:0 0 0 12px"></div>
+                <div style="position:absolute;bottom:0;right:0;width:48px;height:48px;border-bottom:4px solid oklch(0.78 0.008 250);border-right:4px solid oklch(0.78 0.008 250);border-radius:0 0 12px 0"></div>
+                <div style="position:absolute;top:50%;left:12px;right:12px;height:2px;background:oklch(0.78 0.008 250)"></div>
+              </div>
+            </div>
+            <div style="padding:0 20px"><div style="height:56px;border-radius:14px;background:oklch(0.30 0.012 250);border:1.5px solid oklch(0.42 0.012 250);color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Möçberi üýtget</div></div>
+            <div style="padding:14px 20px 0;font-size:13px;line-height:1.4;text-align:center;color:oklch(0.62 0.008 250)">Hemişelik QR-ny skanirläň</div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.40 0.10 165);color:#fff">7.5</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Netije</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 20px 44px;background:oklch(0.985 0.005 165);display:flex;flex-direction:column;align-items:center;gap:12px;position:relative;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="width:88px;height:88px;border-radius:50%;background:oklch(0.52 0.13 152);color:#fff;display:flex;align-items:center;justify-content:center;font-size:46px;font-weight:600;margin-top:22px">✓</div>
+            <div style="font-size:28px;font-weight:600">Üstünlikli</div>
+            <div style="display:flex;align-items:baseline;gap:10px;padding:6px 0"><span style="font-size:72px;font-weight:600;letter-spacing:-0.04em;font-variant-numeric:tabular-nums;line-height:1">48,50</span><span style="font-size:26px;font-weight:500;color:oklch(0.47 0.012 250)">TMT</span></div>
+            <div style="font-size:26px;font-weight:600;text-align:center;line-height:1.25">Aýna Gurbanowa</div>
+            <div style="align-self:stretch;border-radius:14px;background:oklch(0.968 0.006 165);padding:4px 16px;margin-top:10px">
+              <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid oklch(0.93 0.006 250)"><span style="font-size:16px;color:oklch(0.47 0.012 250)">Sene</span><span style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums">20.09.2026 · 13:05</span></div>
+              <div style="display:flex;justify-content:space-between;padding:14px 0"><span style="font-size:16px;color:oklch(0.47 0.012 250)">Amalyň ID-si</span><span style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:500">TX-6C11-2009-BP</span></div>
+            </div>
+            <div style="flex:1"></div>
+            <div style="position:absolute;right:20px;bottom:118px;width:56px;height:56px;border-radius:18px;background:#fff;border:1.5px solid oklch(0.86 0.045 165);display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="oklch(0.31 0.09 165)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7M16 6l-4-4-4 4M12 2v13"></path></svg></div>
+            <div style="align-self:stretch;display:flex;flex-direction:column;gap:10px">
+              <div style="height:64px;border-radius:14px;background:oklch(0.40 0.10 165);color:#fff;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:center">Indiki</div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.53 0.19 27);color:#fff">7.6</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Çäkden ýokary</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="1" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 0 44px;background:oklch(0.20 0.006 250);display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="margin:0 20px;background:#fff;border-radius:22px;padding:24px 20px;display:flex;flex-direction:column;gap:14px;box-shadow:0 12px 32px -8px oklch(0.30 0.06 250 / 0.35)">
+              <div style="width:56px;height:56px;border-radius:50%;background:oklch(0.955 0.03 27);color:oklch(0.45 0.17 27);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:600">!</div>
+              <div style="font-size:24px;font-weight:600;line-height:1.25">Çäkden ýokary</div>
+              <div style="display:flex;flex-direction:column;gap:8px;padding:12px 14px;border-radius:12px;background:oklch(0.962 0.007 165)">
+                <div style="display:flex;justify-content:space-between"><span style="font-size:15px;color:oklch(0.47 0.012 250)">Müşderiniň çägi</span><span style="font-size:19px;font-weight:600;font-variant-numeric:tabular-nums">50,00 TMT</span></div>
+                <div style="display:flex;justify-content:space-between"><span style="font-size:15px;color:oklch(0.47 0.012 250)">Siz soraýarsyňyz</span><span style="font-size:19px;font-weight:600;font-variant-numeric:tabular-nums;color:oklch(0.45 0.17 27)">65,00 TMT</span></div>
+              </div>
+              <div style="font-size:15px;line-height:1.55;color:oklch(0.35 0.012 250)">Möçberi azaldyň ýa-da müşderiden QR kody täzeden döretmegini soraň.</div>
+              <div style="display:flex;flex-direction:column;gap:9px;margin-top:2px">
+                <div style="height:56px;border-radius:14px;background:oklch(0.40 0.10 165);color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Möçberi üýtget</div>
+                <div style="height:56px;border-radius:14px;background:#fff;border:1.5px solid oklch(0.86 0.008 250);font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Ýatyr</div>
+              </div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+    </div>
+  </section>
+
+
+  <section style="display:flex;flex-direction:column;gap:18px;background:#fff;border:1px solid oklch(0.91 0.006 250);border-radius:22px;padding:26px 26px 30px;box-shadow:0 1px 2px oklch(0.3 0.02 250 / 0.04);flex:0 0 auto">
+    <div style="display:flex;align-items:center;gap:12px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;padding:4px 9px;border-radius:7px;background:oklch(0.40 0.10 165);color:#fff">07A</span><span style="font-size:13px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:oklch(0.40 0.10 165)">Отправил / получил — сравнение</span><span style="flex:1;height:1px;background:oklch(0.90 0.006 250)"></span></div>
+    <p style="margin:0;max-width:78ch;font-size:14.5px;line-height:1.6;color:oklch(0.35 0.012 250)">Экран отправителя (4.4) и экран получателя-кассира (7.5) рядом — сравнить композицию и тон успеха.</p>
+    <div style="display:flex;gap:30px">
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.42 0.14 248);color:#fff">4.4</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Otправил · Üstünlikli + çek</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 20px 44px;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;align-items:center;gap:14px;position:relative;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="width:76px;height:76px;border-radius:50%;background:oklch(0.95 0.04 152);color:oklch(0.40 0.11 152);display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:600;margin-top:18px">✓</div>
+            <div style="font-size:26px;font-weight:600">Geçirildi</div>
+            <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:48px;font-weight:600;letter-spacing:-0.035em;font-variant-numeric:tabular-nums">120,00</span><span style="font-size:20px;font-weight:500;color:oklch(0.47 0.012 250)">TMT</span></div>
+            <div style="font-size:17px;color:oklch(0.35 0.012 250)">Merdan Ataýew</div>
+            <div style="align-self:stretch;border-radius:14px;background:oklch(0.968 0.006 248);padding:4px 14px;margin-top:8px">
+              <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid oklch(0.93 0.006 250)"><span style="font-size:14.5px;color:oklch(0.47 0.012 250)">Sene</span><span style="font-size:14.5px;font-weight:600;font-variant-numeric:tabular-nums">20.09.2026 · 14:36</span></div>
+              <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid oklch(0.93 0.006 250)"><span style="font-size:14.5px;color:oklch(0.47 0.012 250)">Amalyň ID-si</span><span style="font-family:'IBM Plex Mono',monospace;font-size:14px">TX-8F42-1907-KD</span></div>
+              <div style="display:flex;justify-content:space-between;padding:12px 0"><span style="font-size:14.5px;color:oklch(0.47 0.012 250)">Ýagdaýy</span><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:5px 9px;border-radius:6px;background:oklch(0.95 0.04 152);color:oklch(0.40 0.11 152)"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.52 0.13 152)"></span>Geçirildi</span></div>
+            </div>
+            <div style="flex:1"></div>
+            <div style="position:absolute;right:20px;bottom:104px;width:56px;height:56px;border-radius:18px;background:#fff;border:1.5px solid oklch(0.86 0.008 250);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px -8px oklch(0.30 0.06 250 / 0.25)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="oklch(0.34 0.12 248)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7M16 6l-4-4-4 4M12 2v13"></path></svg></div>
+            <div style="align-self:stretch;display:flex;flex-direction:column;gap:10px">
+              <div style="height:56px;border-radius:14px;background:oklch(0.42 0.14 248);color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Taýýar</div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.40 0.10 165);color:#fff">7.5</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Получил · Netije</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 20px 44px;background:oklch(0.985 0.005 165);display:flex;flex-direction:column;align-items:center;gap:12px;position:relative;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="width:88px;height:88px;border-radius:50%;background:oklch(0.52 0.13 152);color:#fff;display:flex;align-items:center;justify-content:center;font-size:46px;font-weight:600;margin-top:22px">✓</div>
+            <div style="font-size:28px;font-weight:600">Üstünlikli</div>
+            <div style="display:flex;align-items:baseline;gap:10px;padding:6px 0"><span style="font-size:72px;font-weight:600;letter-spacing:-0.04em;font-variant-numeric:tabular-nums;line-height:1">48,50</span><span style="font-size:26px;font-weight:500;color:oklch(0.47 0.012 250)">TMT</span></div>
+            <div style="font-size:26px;font-weight:600;text-align:center;line-height:1.25">Aýna Gurbanowa</div>
+            <div style="align-self:stretch;border-radius:14px;background:oklch(0.968 0.006 165);padding:4px 16px;margin-top:10px">
+              <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid oklch(0.93 0.006 250)"><span style="font-size:16px;color:oklch(0.47 0.012 250)">Sene</span><span style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums">20.09.2026 · 13:05</span></div>
+              <div style="display:flex;justify-content:space-between;padding:14px 0"><span style="font-size:16px;color:oklch(0.47 0.012 250)">Amalyň ID-si</span><span style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:500">TX-6C11-2009-BP</span></div>
+            </div>
+            <div style="flex:1"></div>
+            <div style="position:absolute;right:20px;bottom:118px;width:56px;height:56px;border-radius:18px;background:#fff;border:1.5px solid oklch(0.86 0.045 165);display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="oklch(0.31 0.09 165)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7M16 6l-4-4-4 4M12 2v13"></path></svg></div>
+            <div style="align-self:stretch;display:flex;flex-direction:column;gap:10px">
+              <div style="height:64px;border-radius:14px;background:oklch(0.40 0.10 165);color:#fff;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:center">Indiki</div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+    </div>
+  </section>
+
+
+  <section style="display:flex;flex-direction:column;gap:18px;background:#fff;border:1px solid oklch(0.91 0.006 250);border-radius:22px;padding:26px 26px 30px;box-shadow:0 1px 2px oklch(0.3 0.02 250 / 0.04);flex:0 0 auto;width:462px">
+    <div style="display:flex;align-items:center;gap:12px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;padding:4px 9px;border-radius:7px;background:oklch(0.42 0.14 248);color:#fff">07B</span><span style="font-size:13px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:oklch(0.42 0.14 248)">Alnan töleg — hemişelik QR arkaly</span><span style="flex:1;height:1px;background:oklch(0.90 0.006 250)"></span></div>
+    <p style="margin:0;max-width:78ch;font-size:14.5px;line-height:1.6;color:oklch(0.35 0.012 250)">Чек, который открывается из истории, когда деньги пришли по постоянному QR.</p>
+    <div style="display:flex;flex-direction:column;gap:30px">
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.42 0.14 248);color:#fff">6.2</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Amal jikme-jigi · alnan töleg</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 20px 44px;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;gap:14px;position:relative;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="display:flex;align-items:center;gap:12px;padding:6px 0"><span style="font-size:22px;color:oklch(0.47 0.012 250)">‹</span><span style="font-size:18px;font-weight:600">Amal</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px 0">
+              <div style="width:64px;height:64px;border-radius:50%;background:oklch(0.95 0.04 152);color:oklch(0.40 0.11 152);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:600">↓</div>
+              <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:48px;font-weight:600;letter-spacing:-0.035em;font-variant-numeric:tabular-nums;color:oklch(0.40 0.11 152)">120,00</span><span style="font-size:20px;font-weight:500;color:oklch(0.47 0.012 250)">TMT</span></div>
+              <div style="font-size:18px;font-weight:600">Merdan Ataýew</div>
+              <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:6px 10px;border-radius:6px;background:oklch(0.95 0.04 152);color:oklch(0.40 0.11 152)"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.52 0.13 152)"></span>Geçirildi</span>
+            </div>
+            <div style="border-radius:14px;border:1px solid oklch(0.93 0.006 250);overflow:hidden">
+              <div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid oklch(0.93 0.006 250)"><span style="font-size:15px;color:oklch(0.47 0.012 250)">Sene</span><span style="font-size:15px;font-weight:600;font-variant-numeric:tabular-nums">20.09.2026 · 14:36</span></div>
+              <div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid oklch(0.93 0.006 250)"><span style="font-size:15px;color:oklch(0.47 0.012 250)">Görnüşi</span><span style="font-size:15px;font-weight:600">Hemişelik QR arkaly</span></div>
+              <div style="display:flex;justify-content:space-between;padding:14px"><span style="font-size:15px;color:oklch(0.47 0.012 250)">Amalyň ID-si</span><span style="font-family:'IBM Plex Mono',monospace;font-size:14.5px">TX-8F42-1907-KD</span></div>
+            </div>
+            <div style="flex:1"></div>
+            <div style="position:absolute;right:20px;bottom:44px;width:56px;height:56px;border-radius:18px;background:#fff;border:1.5px solid oklch(0.86 0.008 250);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px -8px oklch(0.30 0.06 250 / 0.25)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="oklch(0.34 0.12 248)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7M16 6l-4-4-4 4M12 2v13"></path></svg></div>
+          </div>
+        </x-import>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:18px;background:#fff;border:1px solid oklch(0.91 0.006 250);border-radius:22px;padding:26px 26px 30px;box-shadow:0 1px 2px oklch(0.3 0.02 250 / 0.04);flex:0 0 auto;width:462px">
+    <div style="display:flex;align-items:center;gap:12px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;padding:4px 9px;border-radius:7px;background:oklch(0.45 0.012 250);color:#fff">08</span><span style="font-size:13px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:oklch(0.45 0.012 250)">Ýagdaýlar — состояния</span><span style="flex:1;height:1px;background:oklch(0.90 0.006 250)"></span></div>
+    <p style="margin:0;max-width:78ch;font-size:14.5px;line-height:1.6;color:oklch(0.35 0.012 250)">Офлайн, ожидание подтверждения и пустые состояния. Серый — состояние сети, янтарный — очередь операций.</p>
+    <div style="display:flex;flex-direction:column;gap:30px">
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.45 0.012 250);color:#fff">8.1</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Oflaýn · esasy</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 0 0;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;position:relative;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 20px 12px">
+              <div style="display:flex;align-items:center;gap:9px"><div style="width:28px;height:28px;border-radius:8px;background:oklch(0.42 0.14 248);display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border-radius:50%;background:oklch(0.93 0.06 95)"></div></div><span style="font-size:17px;font-weight:600">Nur Pay</span></div>
+              <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:6px 10px;border-radius:999px;background:oklch(0.93 0.006 250);color:oklch(0.40 0.012 250)"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.55 0.012 250)"></span>Oflaýn</span>
+            </div>
+            <div style="padding:0 20px;display:flex;flex-direction:column;gap:12px;flex:1;overflow:hidden">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:oklch(0.93 0.006 250)"><span style="width:10px;height:10px;border-radius:50%;background:oklch(0.55 0.012 250);flex:none"></span><div><div style="font-size:15px;font-weight:600">Aragatnaşyk ýok</div><div style="font-size:13px;color:oklch(0.47 0.012 250)">Görkezilen maglumat 14:32-däki ýagdaý</div></div></div>
+              <div style="border-radius:20px;background:oklch(0.42 0.14 248);padding:20px;color:#fff;display:flex;flex-direction:column;gap:4px">
+                <div style="display:flex;align-items:center;gap:7px;font-size:13px;color:oklch(0.86 0.04 248)"><span style="width:8px;height:8px;border-radius:50%;background:oklch(0.80 0.02 250)"></span>Soňky sinhronizasiýa: şu gün 14:32</div>
+                <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:48px;font-weight:600;letter-spacing:-0.035em;font-variant-numeric:tabular-nums;line-height:1.1">233,50</span><span style="font-size:20px;font-weight:500;color:oklch(0.88 0.03 248)">TMT</span></div>
+                <div style="font-size:13.5px;color:oklch(0.86 0.04 248)">Şondan bäri üýtgän bolmagy mümkin</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:oklch(0.955 0.045 80)"><span style="width:10px;height:10px;border-radius:50%;background:oklch(0.60 0.12 75);flex:none"></span><div><div style="font-size:15px;font-weight:600;color:oklch(0.35 0.08 70)">1 amal garaşylýar</div><div style="font-size:13px;color:oklch(0.45 0.06 70)">Internet gelende ugradylar</div></div></div>
+              <div style="background:#fff;border-radius:14px;border:1px solid oklch(0.93 0.006 250);overflow:hidden">
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 14px;background:oklch(0.99 0.012 85);border-left:3px dashed oklch(0.60 0.12 75)"><div style="width:40px;height:40px;border-radius:50%;background:oklch(0.955 0.045 80);color:oklch(0.45 0.10 70);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600">↑</div><div style="flex:1"><div style="font-size:16px;font-weight:600">«Altyn» market</div><div style="display:flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:oklch(0.45 0.10 70)"><span style="width:6px;height:6px;border-radius:50%;background:oklch(0.60 0.12 75)"></span>Garaşylýar · 14:51</div></div><div style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;color:oklch(0.45 0.10 70)">−15,00</div></div>
+              </div>
+            </div>
+            <div style="position:absolute;right:20px;bottom:196px;height:64px;border-radius:20px;background:oklch(0.42 0.14 248);color:#fff;display:flex;align-items:center;gap:12px;padding:0 20px;box-shadow:0 14px 30px -8px oklch(0.42 0.14 248 / 0.6)">
+              <div style="width:30px;height:30px;background:repeating-conic-gradient(#fff 0% 25%,oklch(0.42 0.14 248) 0% 50%) 0 0/10px 10px;border-radius:4px"></div>
+              <span style="font-size:18px;font-weight:600">Dükanda töle</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;padding:12px 20px 14px;background:#fff;border-top:1px solid oklch(0.93 0.006 250)">
+              <div style="display:flex;gap:10px">
+                <div style="flex:1;height:56px;border-radius:14px;background:oklch(0.93 0.004 250);color:oklch(0.70 0.008 250);font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center">Pul geçir</div>
+                <div style="flex:1;height:56px;border-radius:14px;background:oklch(0.93 0.004 250);color:oklch(0.70 0.008 250);font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center">Hasaby doldur</div>
+              </div>
+              <div style="font-size:13px;color:oklch(0.63 0.01 250);line-height:1.45;text-align:center">Bular üçin internet gerek. Dükanda töleg oflaýn işleýär.</div>
+            </div>
+            <div style="display:flex;border-top:1px solid oklch(0.90 0.006 250);background:#fff;padding:8px 0 30px">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.42 0.14 248)"></div><span style="font-size:11.5px;font-weight:600;color:oklch(0.42 0.14 248)">Esasy</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.80 0.01 250)"></div><span style="font-size:11.5px;color:oklch(0.55 0.012 250)">Taryh</span></div>
+              
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.80 0.01 250)"></div><span style="font-size:11.5px;color:oklch(0.55 0.012 250)">Profil</span></div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.45 0.012 250);color:#fff">8.2</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Garaşylýar · amal</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 20px 44px;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;gap:14px;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="display:flex;align-items:center;gap:12px;padding:6px 0"><span style="font-size:22px;color:oklch(0.47 0.012 250)">‹</span><span style="font-size:18px;font-weight:600">Amal</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px 0">
+              <div style="width:72px;height:72px;border-radius:50%;background:oklch(0.955 0.045 80);color:oklch(0.45 0.10 70);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:600">⟳</div>
+              <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:48px;font-weight:600;letter-spacing:-0.035em;font-variant-numeric:tabular-nums;color:oklch(0.45 0.10 70)">15,00</span><span style="font-size:20px;font-weight:500;color:oklch(0.47 0.012 250)">TMT</span></div>
+              <div style="font-size:18px;font-weight:600">«Altyn» market</div>
+              <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:6px 10px;border-radius:6px;background:oklch(0.955 0.045 80);color:oklch(0.45 0.10 70)"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.60 0.12 75)"></span>Garaşylýar</span>
+            </div>
+            <div style="padding:14px;border-radius:12px;background:oklch(0.99 0.012 85);border:1px dashed oklch(0.75 0.09 75);font-size:15px;line-height:1.55;color:oklch(0.35 0.08 70)">Töleg kabul edildi, emma platforma entek tassyklanok. Telefonyňyz internete birlenende awtomatiki tamamlanar. Balansdan möçber eýýäm aýryldy.</div>
+            <div style="border-radius:14px;border:1px solid oklch(0.93 0.006 250);overflow:hidden">
+              <div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid oklch(0.93 0.006 250)"><span style="font-size:15px;color:oklch(0.47 0.012 250)">Döredilen wagty</span><span style="font-size:15px;font-weight:600;font-variant-numeric:tabular-nums">20.09.2026 · 14:51</span></div>
+              <div style="display:flex;justify-content:space-between;padding:14px"><span style="font-size:15px;color:oklch(0.47 0.012 250)">Amalyň ID-si</span><span style="font-family:'IBM Plex Mono',monospace;font-size:14.5px">TX-91A7-2009-LR</span></div>
+            </div>
+            <div style="flex:1"></div>
+            <div style="height:56px;border-radius:14px;background:#fff;border:1.5px solid oklch(0.86 0.008 250);font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Çeki paýlaş</div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.45 0.012 250);color:#fff">8.3</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Boş · amal ýok</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 0 0;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 20px 12px"><span style="font-size:22px;font-weight:600">Taryh</span><span style="font-size:14px;font-weight:600;padding:8px 12px;border-radius:999px;background:oklch(0.95 0.006 250);color:oklch(0.63 0.01 250)">Süzgüç</span></div>
+            <div style="padding:0 20px 12px"><div style="display:flex;background:oklch(0.95 0.006 250);border-radius:10px;padding:4px"><div style="flex:1;text-align:center;padding:9px 0;border-radius:8px;background:#fff;font-size:15px;font-weight:600">Hemmesi</div><div style="flex:1;text-align:center;padding:9px 0;font-size:15px;color:oklch(0.47 0.012 250)">Gelen</div><div style="flex:1;text-align:center;padding:9px 0;font-size:15px;color:oklch(0.47 0.012 250)">Giden</div></div></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px">
+              <div style="width:72px;height:72px;border-radius:18px;background:repeating-linear-gradient(135deg,oklch(0.93 0.006 250) 0 7px,oklch(0.97 0.004 250) 7px 14px)"></div>
+              <div style="font-size:20px;font-weight:600">Amal ýok</div>
+              <div style="font-size:15px;line-height:1.55;color:oklch(0.47 0.012 250);text-align:center;max-width:30ch">Ilkinji tölegiňizden soň ähli amallar şu ýerde ýygnalar</div>
+              <div style="height:52px;padding:0 22px;border-radius:14px;background:oklch(0.93 0.035 248);color:oklch(0.34 0.12 248);font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center">Pul geçir</div>
+            </div>
+            <div style="display:flex;border-top:1px solid oklch(0.90 0.006 250);background:#fff;padding:8px 0 30px">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.80 0.01 250)"></div><span style="font-size:11.5px;color:oklch(0.55 0.012 250)">Esasy</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.42 0.14 248)"></div><span style="font-size:11.5px;font-weight:600;color:oklch(0.42 0.14 248)">Taryh</span></div>
+              
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.80 0.01 250)"></div><span style="font-size:11.5px;color:oklch(0.55 0.012 250)">Profil</span></div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.45 0.012 250);color:#fff">8.4</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Boş · kontakt tapylmady</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 0 44px;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;gap:14px;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="padding:6px 20px 0;display:flex;align-items:center;gap:12px"><span style="font-size:22px;color:oklch(0.47 0.012 250)">‹</span><span style="font-size:18px;font-weight:600">Pul geçir</span></div>
+            <div style="padding:0 20px"><div style="height:52px;border-radius:10px;border:2px solid oklch(0.42 0.14 248);box-shadow:0 0 0 4px oklch(0.42 0.14 248 / 0.12);display:flex;align-items:center;padding:0 14px;font-size:16px">Nurmuhammet</div></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px">
+              <div style="width:72px;height:72px;border-radius:18px;background:repeating-linear-gradient(135deg,oklch(0.93 0.006 250) 0 7px,oklch(0.97 0.004 250) 7px 14px)"></div>
+              <div style="font-size:20px;font-weight:600">Kontakt tapylmady</div>
+              <div style="font-size:15px;line-height:1.55;color:oklch(0.47 0.012 250);text-align:center;max-width:32ch">Telefon belgisi boýunça gözläň ýa-da adamyň hemişelik QR kodyny skanirläň</div>
+              <div style="display:flex;flex-direction:column;gap:10px;align-self:stretch;padding:0 12px">
+                <div style="height:52px;border-radius:14px;background:oklch(0.93 0.035 248);color:oklch(0.34 0.12 248);font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center">Belgi boýunça gözle</div>
+                <div style="height:52px;border-radius:14px;background:#fff;border:1.5px solid oklch(0.86 0.008 250);font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center">QR skanirle</div>
+              </div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.45 0.012 250);color:#fff">8.5</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Aragatnaşyk ýok · geçirim</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 20px 44px;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;gap:14px;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="display:flex;align-items:center;gap:12px;padding:6px 0"><span style="font-size:22px;color:oklch(0.47 0.012 250)">‹</span><span style="font-size:18px;font-weight:600">Pul geçir</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px">
+              <div style="width:72px;height:72px;border-radius:18px;background:oklch(0.93 0.006 250);display:flex;align-items:center;justify-content:center"><span style="width:16px;height:16px;border-radius:50%;background:oklch(0.55 0.012 250)"></span></div>
+              <div style="font-size:22px;font-weight:600;text-align:center">Aragatnaşyk ýok</div>
+              <div style="font-size:15.5px;line-height:1.6;color:oklch(0.47 0.012 250);text-align:center;max-width:32ch">Pul geçirmek üçin internet gerek. Dükanda töleg oflaýn hem işleýär.</div>
+              <div style="font-size:14px;color:oklch(0.63 0.01 250);font-variant-numeric:tabular-nums">Soňky sinhronizasiýa: şu gün 14:32</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="height:56px;border-radius:14px;background:oklch(0.42 0.14 248);color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Gaýtadan synanyş</div>
+              <div style="height:56px;border-radius:14px;background:#fff;border:1.5px solid oklch(0.86 0.008 250);font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Dükanda töle</div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+    </div>
+  </section>
+
+  
+  <section style="display:flex;flex-direction:column;gap:18px;background:#fff;border:1px solid oklch(0.91 0.006 250);border-radius:22px;padding:26px 26px 30px;box-shadow:0 1px 2px oklch(0.3 0.02 250 / 0.04);flex:0 0 auto;width:462px">
+    <div style="display:flex;align-items:center;gap:12px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;padding:4px 9px;border-radius:7px;background:oklch(0.42 0.14 248);color:#fff">09</span><span style="font-size:13px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:oklch(0.42 0.14 248)">Profil</span><span style="flex:1;height:1px;background:oklch(0.90 0.006 250)"></span></div>
+    <p style="margin:0;max-width:78ch;font-size:14.5px;line-height:1.6;color:oklch(0.35 0.012 250)">Профиль клиента: свой QR, PIN, язык, справка, выход.</p>
+    <div style="display:flex;flex-direction:column;gap:30px">
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.42 0.14 248);color:#fff">9.1</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Profil</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 0 0;background:oklch(0.985 0.005 248);display:flex;flex-direction:column;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="padding:14px 20px 18px;display:flex;align-items:center;gap:14px;background:#fff;border-bottom:1px solid oklch(0.93 0.006 250)">
+              <div style="width:60px;height:60px;border-radius:50%;background:oklch(0.93 0.035 248);color:oklch(0.34 0.12 248);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:600">AG</div>
+              <div><div style="font-size:20px;font-weight:600">Aýna Gurbanowa</div><div style="font-size:15px;color:oklch(0.47 0.012 250);font-variant-numeric:tabular-nums">+993 65 12 34 56</div></div>
+            </div>
+            <div style="padding:14px 20px 8px;font-size:13px;font-weight:600;letter-spacing:0.06em;color:oklch(0.63 0.01 250);text-transform:uppercase">Hasap</div>
+            <div style="background:#fff;border-top:1px solid oklch(0.93 0.006 250);border-bottom:1px solid oklch(0.93 0.006 250)">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid oklch(0.95 0.006 250);font-size:17px">Meniň QR kodum<span style="color:oklch(0.63 0.01 250)">›</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid oklch(0.95 0.006 250);font-size:17px">PIN-i üýtget<span style="color:oklch(0.63 0.01 250)">›</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;font-size:17px">Dil<span style="font-size:16px;color:oklch(0.47 0.012 250)">Türkmen ›</span></div>
+            </div>
+            <div style="padding:14px 20px 8px;font-size:13px;font-weight:600;letter-spacing:0.06em;color:oklch(0.63 0.01 250);text-transform:uppercase">Maglumat</div>
+            <div style="background:#fff;border-top:1px solid oklch(0.93 0.006 250);border-bottom:1px solid oklch(0.93 0.006 250)">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid oklch(0.95 0.006 250);font-size:17px">Soňky sinhronizasiýa<span style="font-size:16px;color:oklch(0.47 0.012 250);font-variant-numeric:tabular-nums">14:32 ›</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;font-size:17px">Kömek<span style="color:oklch(0.63 0.01 250)">›</span></div>
+            </div>
+            <div style="padding:18px 20px"><div style="height:56px;border-radius:14px;background:#fff;border:1.5px solid oklch(0.88 0.03 27);color:oklch(0.45 0.17 27);font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">Çyk</div></div>
+            <div style="flex:1"></div>
+            <div style="display:flex;border-top:1px solid oklch(0.90 0.006 250);background:#fff;padding:8px 0 30px">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.80 0.01 250)"></div><span style="font-size:11.5px;color:oklch(0.55 0.012 250)">Esasy</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.80 0.01 250)"></div><span style="font-size:11.5px;color:oklch(0.55 0.012 250)">Taryh</span></div>
+              
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:22px;height:22px;border-radius:6px;background:oklch(0.42 0.14 248)"></div><span style="font-size:11.5px;font-weight:600;color:oklch(0.42 0.14 248)">Profil</span></div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+    </div>
+  </section>
+
+
+  <section style="display:flex;flex-direction:column;gap:18px;background:#fff;border:1px solid oklch(0.91 0.006 250);border-radius:22px;padding:26px 26px 30px;box-shadow:0 1px 2px oklch(0.3 0.02 250 / 0.04);flex:0 0 auto;width:462px">
+    <div style="display:flex;align-items:center;gap:12px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;padding:4px 9px;border-radius:7px;background:oklch(0.42 0.14 248);color:#fff">10</span><span style="font-size:13px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:oklch(0.42 0.14 248)">PIN — общий компонент подтверждения</span><span style="flex:1;height:1px;background:oklch(0.90 0.006 250)"></span></div>
+    <p style="margin:0;max-width:78ch;font-size:14.5px;line-height:1.6;color:oklch(0.35 0.012 250)">Шторка с PIN-кодом поверх текущего экрана. Переиспользуется везде, где нужно подтверждение — кроме дükanda töleg (С1), там PIN не вводится.</p>
+    <div style="display:flex;flex-direction:column;gap:30px">
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 7px;border-radius:5px;background:oklch(0.42 0.14 248);color:#fff">10.1</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">PIN şitasy поверх лимита</span></div>
+        <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+          <div style="height:100%;box-sizing:border-box;padding:62px 0 0;background:oklch(0.24 0.006 250 / 0.34);display:flex;flex-direction:column;font-family:'IBM Plex Sans',system-ui,sans-serif;color:oklch(0.22 0.015 250)">
+            <div style="padding:6px 20px 0;display:flex;align-items:center;gap:12px;opacity:0.5"><span style="font-size:22px;color:oklch(0.47 0.012 250)">‹</span><span style="font-size:18px;font-weight:600">Dükanda töle</span></div>
+            <div style="padding:22px 20px 0;display:flex;flex-direction:column;align-items:center;gap:4px;opacity:0.5">
+              <div style="font-size:15px;color:oklch(0.35 0.012 250)">Rugsat berlen çäk</div>
+              <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:52px;font-weight:600;letter-spacing:-0.04em;font-variant-numeric:tabular-nums">50,00</span><span style="font-size:22px;font-weight:500;color:oklch(0.47 0.012 250)">TMT</span></div>
+            </div>
+            <div style="flex:1"></div>
+            <div style="background:#fff;border-radius:24px 24px 0 0;padding:16px 20px 34px;display:flex;flex-direction:column;gap:12px;box-shadow:0 -12px 32px -8px oklch(0.30 0.06 250 / 0.28)">
+              <div style="width:44px;height:5px;border-radius:999px;background:oklch(0.88 0.008 250);align-self:center"></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                <div style="font-size:20px;font-weight:600">PIN giriziň</div>
+                <div style="font-size:14.5px;color:oklch(0.47 0.012 250)">50,00 TMT çäkli QR dörediler</div>
+              </div>
+              <div style="display:flex;gap:16px;justify-content:center;padding:8px 0 4px">
+                <div style="width:18px;height:18px;border-radius:50%;background:oklch(0.42 0.14 248)"></div>
+                <div style="width:18px;height:18px;border-radius:50%;background:oklch(0.42 0.14 248)"></div>
+                <div style="width:18px;height:18px;border-radius:50%;background:oklch(0.42 0.14 248)"></div>
+                <div style="width:18px;height:18px;border-radius:50%;border:2px solid oklch(0.82 0.01 250)"></div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+                <div style="height:62px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:500">1</div>
+                <div style="height:62px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:500">2</div>
+                <div style="height:62px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:500">3</div>
+                <div style="height:62px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:500">4</div>
+                <div style="height:62px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:500">5</div>
+                <div style="height:62px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:500">6</div>
+                <div style="height:62px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:500">7</div>
+                <div style="height:62px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:500">8</div>
+                <div style="height:62px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:500">9</div>
+                <div style="height:62px"></div>
+                <div style="height:62px;border-radius:12px;background:oklch(0.962 0.007 248);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:500">0</div>
+                <div style="height:62px;border-radius:12px;background:oklch(0.95 0.006 250);display:flex;align-items:center;justify-content:center;font-size:23px">⌫</div>
+              </div>
+            </div>
+          </div>
+        </x-import>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+  <section style="display:flex;flex-direction:column;gap:14px;border-top:1px solid oklch(0.90 0.006 250);padding-top:24px;max-width:900px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:oklch(0.63 0.01 250)">Связки</div>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:1.6;color:oklch(0.35 0.012 250)">
+      <div><b style="color:oklch(0.34 0.12 248)">С1 · оплата в магазине офлайн:</b> 2.1 главный → 3.1 лимит → 3.2 PIN шторкой → 3.3 платёжный QR (дальше клиент ничего не делает) → 7.2 сумма у кассира → 7.3 сканер → 7.5 результат крупными цифрами. У клиента операция появляется как «Garaşylýar» (8.2) и закрывается при синхронизации.</div>
+      <div><b style="color:oklch(0.34 0.12 248)">С2 · перевод между пользователями:</b> 4.1 контакты → 4.2 сумма → 4.3 подтверждение → PIN шторкой (как 3.2) → 4.4 успех с чеком и «Çeki paýlaş». Без сети шаг не начинается: 8.5.</div>
+    </div>
+    <p style="margin:6px 0 0;font-size:13.5px;color:oklch(0.47 0.012 250);line-height:1.6">Удалил как дубли: старый главный с ссылкой «Hemmesi» и вкладкой «Meniň QR», отдельный экран PIN перед QR (теперь шторка). Что можно добавить дальше: экран успеха пополнения кодом, история и профиль мерчанта, повторная отправка зависшей операции вручную, состояние «QR просрочен» у кассира.</p>
+  </section>
+</div>
+</x-dc>
+</body>
+</html>

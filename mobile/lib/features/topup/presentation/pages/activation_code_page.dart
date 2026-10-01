@@ -70,7 +70,10 @@ class _ActivationCodePageState extends State<ActivationCodePage> {
     final text = Theme.of(context).textTheme;
     final busy = context.watch<ActivationCubit>().state.busy;
 
-    final codeStyle = AppTypography.monospace(
+    // Не AppTypography.monospace: у нуля в IBM Plex Mono точка внутри
+    // (так отличают «0» от «O»), а тут её путают с точкой-заглушкой.
+    // В Sans цифры и так одинаковой ширины — выравнивание не теряется.
+    final codeStyle = AppTypography.tabular(
       text.headlineSmall!.copyWith(
         fontSize: 24.sp,
         fontWeight: FontWeight.w400,
@@ -78,7 +81,17 @@ class _ActivationCodePageState extends State<ActivationCodePage> {
     ).copyWith(letterSpacing: 0.08 * 24.sp);
 
     final missing = _length - _editor.filled;
-    final placeholder = List.filled(missing, '·').join();
+    final digits = _editor.digits;
+
+    // Точки-заглушки группируются по четыре вместе с цифрами — иначе после
+    // ввода первой цифры группы остаток точек съезжает в один сплошной
+    // кусок и перестаёт совпадать с делением «XXXX XXXX XXXX».
+    List<InlineSpan> group(int start) => [
+      for (var i = start; i < start + 4 && i < _length; i++)
+        i < digits.length
+            ? TextSpan(text: digits[i])
+            : TextSpan(text: '·', style: TextStyle(color: cs.outline)),
+    ];
 
     return AppScaffold(
       padded: false,
@@ -105,13 +118,10 @@ class _ActivationCodePageState extends State<ActivationCodePage> {
                       TextSpan(
                         style: codeStyle,
                         children: [
-                          TextSpan(text: _editor.grouped),
-                          if (missing > 0)
-                            TextSpan(
-                              text:
-                                  '${_editor.filled % 4 == 0 && _editor.filled > 0 ? ' ' : ''}$placeholder',
-                              style: TextStyle(color: cs.outline),
-                            ),
+                          for (var i = 0; i < _length; i += 4) ...[
+                            if (i > 0) const TextSpan(text: ' '),
+                            ...group(i),
+                          ],
                         ],
                       ),
                     ),

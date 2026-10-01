@@ -57,7 +57,6 @@ class _TransferScanPageState extends State<TransferScanPage> {
     child: Builder(
       builder: (context) {
         final cs = Theme.of(context).colorScheme;
-        final text = Theme.of(context).textTheme;
 
         return Scaffold(
           backgroundColor: cs.surface,
@@ -68,23 +67,36 @@ class _TransferScanPageState extends State<TransferScanPage> {
                   accent: cs.primary,
                   active: !_handling,
                   onDetect: _onDetect,
+                  hint: _handling
+                      ? 'Kod okaldy…'
+                      : 'Alyjynyň hemişelik QR kodyny skanirläň',
+                ),
+              ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: ColoredBox(
+                  color: cs.surface,
+                  child: SafeArea(
+                    bottom: false,
+                    child: AppTopBar(title: 'Pul geçir'),
+                  ),
                 ),
               ),
               SafeArea(
+                top: false,
                 child: Column(
                   children: [
-                    const AppTopBar(title: 'Pul geçir'),
                     const Spacer(),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 24.h),
-                      child: Text(
-                        _handling
-                            ? 'Kod okaldy…'
-                            : 'Alyjynyň hemişelik QR kodyny skanirläň',
-                        textAlign: TextAlign.center,
-                        style: text.bodyMedium?.copyWith(
-                          color: _handling ? cs.primary : cs.onSurfaceVariant,
-                        ),
+                      padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 20.h),
+                      child: AppButton.outlined(
+                        label: 'Kontaktlardan saýla',
+                        icon: Icons.contacts_outlined,
+                        onPressed: _handling
+                            ? null
+                            : () => context.push(AppRoutes.transferContacts),
                       ),
                     ),
                   ],

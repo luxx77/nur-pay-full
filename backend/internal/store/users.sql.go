@@ -49,6 +49,49 @@ func (q *Queries) GetUserByPublicQRUUID(ctx context.Context, publicQrUuid uuid.U
 	return i, err
 }
 
+const listUsersByPhones = `-- name: ListUsersByPhones :many
+SELECT id, phone, type, display_name, public_qr_uuid, payment_secret, created_at FROM users
+WHERE type = 'user'
+  AND right(regexp_replace(coalesce(phone, ''), '\D', '', 'g'), 8)
+      = ANY($1::text[])
+`
+
+// Кто из списка номеров (контактов с телефона) уже в Nur Pay — для
+// экрана «выбрать из контактов». Системные счета не отдаём: на них
+// не переводят.
+//
+// Сравниваем по последним 8 цифрам, а не строкой целиком: код страны в
+// приложении всегда +993, а в телефонной книге номера хранятся как
+// попало — с ним, без него, с пробелами. Восемь цифр — это ровно
+// локальный номер абонента (см. валидацию на экране входа).
+func (q *Queries) ListUsersByPhones(ctx context.Context, phones []string) ([]User, error) {
+	rows, err := q.db.Query(ctx, listUsersByPhones, phones)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []User{}
+	for rows.Next() {
+		var i User
+		if err := rows.Scan(
+			&i.ID,
+			&i.Phone,
+			&i.Type,
+			&i.DisplayName,
+			&i.PublicQrUuid,
+			&i.PaymentSecret,
+			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const upsertUserByPhone = `-- name: UpsertUserByPhone :one
 INSERT INTO users (phone, type, public_qr_uuid, payment_secret)
 VALUES ($1, 'user', $2, $3)

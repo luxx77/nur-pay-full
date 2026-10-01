@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../app_role.dart';
 import '../session/session.dart';
 import 'api_error_code.dart';
 import 'api_exception.dart';
+import 'network_error_bus.dart';
 
 /// HTTP-клиент Nur Pay.
 ///
@@ -27,12 +31,24 @@ class ApiClient {
             ),
           );
 
-  /// Адрес бэкенда. В отладке по умолчанию смотрит на эмулятор Android
-  /// (10.0.2.2 — это localhost хоста); меняется через --dart-define.
-  static const defaultBaseUrl = String.fromEnvironment(
-    'NURPAY_API_URL',
-    defaultValue: 'http://10.0.2.2:8080',
-  );
+  /// Адрес бэкенда. Переопределяется значением NURPAY_API_URL —
+  /// сначала смотрим в --dart-define (явный override для конкретного
+  /// запуска/сборки), затем в .env (подхватывается через dotenv.load()
+  /// в main — его достаточно для обычного `flutter run` на реальном
+  /// устройстве в одной сети с компьютером).
+  ///
+  /// Без переопределения угадываем по платформе: у Android-эмулятора
+  /// localhost хоста — это 10.0.2.2, а не localhost. На остальных целях
+  /// отладки (macOS, web, iOS-симулятор) сервер поднят на этой же
+  /// машине, туда и обычный localhost достаёт.
+  static String get defaultBaseUrl {
+    const override = String.fromEnvironment('NURPAY_API_URL');
+    if (override.isNotEmpty) return override;
+    final fromDotenv = dotenv.maybeGet('NURPAY_API_URL');
+    if (fromDotenv != null && fromDotenv.isNotEmpty) return fromDotenv;
+    if (!kIsWeb && Platform.isAndroid) return 'http://10.0.2.2:8080';
+    return 'http://localhost:8080';
+  }
 
   final Dio _dio;
 
@@ -63,7 +79,9 @@ class ApiClient {
     try {
       response = await _withAuth(request);
     } on DioException {
-      throw const ApiException.network();
+      const error = ApiException.network();
+      NetworkErrorBus.instance.add(error);
+      throw error;
     }
 
     final data = response.data;

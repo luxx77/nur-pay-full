@@ -72,7 +72,6 @@ class _MerchantScannerPageState extends State<MerchantScannerPage> {
     child: Builder(
       builder: (context) {
         final cs = Theme.of(context).colorScheme;
-        final text = Theme.of(context).textTheme;
         final amount = context.watch<MerchantPaymentCubit>().state.amount;
 
         return Scaffold(
@@ -84,36 +83,43 @@ class _MerchantScannerPageState extends State<MerchantScannerPage> {
                   accent: cs.secondary,
                   active: !_handling,
                   onDetect: _onDetect,
+                  hint: _handling
+                      ? 'Kod okaldy…'
+                      : 'Müşderiniň bir gezeklik QR-ny skanirläň',
+                ),
+              ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: ColoredBox(
+                  color: cs.surface,
+                  child: SafeArea(
+                    bottom: false,
+                    child: Column(
+                      children: [
+                        const AppTopBar(title: 'Çekmek'),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 12.h),
+                          child: Row(
+                            children: [
+                              AmountText(
+                                amount.formatted,
+                                size: AmountSize.compact,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
               SafeArea(
+                top: false,
                 child: Column(
                   children: [
-                    const AppTopBar(title: 'Çekmek'),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: Row(
-                        children: [
-                          AmountText(
-                            amount.formatted,
-                            size: AmountSize.compact,
-                          ),
-                        ],
-                      ),
-                    ),
                     const Spacer(),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 14.h),
-                      child: Text(
-                        _handling
-                            ? 'Kod okaldy…'
-                            : 'Müşderiniň bir gezeklik QR-ny skanirläň',
-                        textAlign: TextAlign.center,
-                        style: text.bodyMedium?.copyWith(
-                          color: _handling ? cs.secondary : cs.onSurfaceVariant,
-                        ),
-                      ),
-                    ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 20.h),
                       child: AppButton(

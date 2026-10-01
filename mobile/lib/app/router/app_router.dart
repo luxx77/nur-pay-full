@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart' show CupertinoPage;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -27,6 +28,7 @@ import '../../features/topup/presentation/pages/topup_success_page.dart';
 import '../../features/transactions/presentation/pages/transaction_details_page.dart';
 import '../../features/transfer/presentation/pages/transfer_amount_page.dart';
 import '../../features/transfer/presentation/pages/transfer_confirm_page.dart';
+import '../../features/transfer/presentation/pages/transfer_contacts_page.dart';
 import '../../features/transfer/presentation/pages/transfer_scan_page.dart';
 import '../../features/transfer/presentation/pages/transfer_success_page.dart';
 import '../widgets/app_shell.dart';
@@ -50,15 +52,20 @@ abstract final class AppRouter {
       GoRoute(path: AppRoutes.splash, builder: (_, _) => const SplashPage()),
 
       // ── Вход ──────────────────────────────────────────────────────────
-      GoRoute(path: AppRoutes.phone, builder: (_, _) => const PhonePage()),
+      GoRoute(
+        path: AppRoutes.phone,
+        pageBuilder: (_, state) => _page(state, const PhonePage()),
+      ),
       GoRoute(
         path: AppRoutes.otp,
-        builder: (_, state) =>
-            OtpPage(phone: state.uri.queryParameters['phone'] ?? ''),
+        pageBuilder: (_, state) => _page(
+          state,
+          OtpPage(phone: state.uri.queryParameters['phone'] ?? ''),
+        ),
       ),
       GoRoute(
         path: AppRoutes.pinCreate,
-        builder: (_, _) => const PinCreatePage(),
+        pageBuilder: (_, state) => _page(state, const PinCreatePage()),
       ),
 
       // ── Вкладки кошелька ──────────────────────────────────────────────
@@ -130,63 +137,78 @@ abstract final class AppRouter {
       // ── Сценарии поверх вкладок ───────────────────────────────────────
       GoRoute(
         path: AppRoutes.payLimit,
-        builder: (_, _) => const PayLimitPage(),
+        pageBuilder: (_, state) => _page(state, const PayLimitPage()),
       ),
-      GoRoute(path: AppRoutes.payQr, builder: (_, _) => const PaymentQrPage()),
+      GoRoute(
+        path: AppRoutes.payQr,
+        pageBuilder: (_, state) => _page(state, const PaymentQrPage()),
+      ),
 
       GoRoute(
         path: AppRoutes.transferScan,
-        builder: (_, _) => const TransferScanPage(),
+        pageBuilder: (_, state) => _page(state, const TransferScanPage()),
+      ),
+      GoRoute(
+        path: AppRoutes.transferContacts,
+        pageBuilder: (_, state) => _page(state, const TransferContactsPage()),
       ),
       GoRoute(
         path: AppRoutes.transferAmount,
-        builder: (_, _) => const TransferAmountPage(),
+        pageBuilder: (_, state) => _page(state, const TransferAmountPage()),
       ),
       GoRoute(
         path: AppRoutes.transferConfirm,
-        builder: (_, _) => const TransferConfirmPage(),
+        pageBuilder: (_, state) => _page(state, const TransferConfirmPage()),
       ),
       GoRoute(
         path: AppRoutes.transferSuccess,
-        builder: (_, _) => const TransferSuccessPage(),
+        pageBuilder: (_, state) => _page(state, const TransferSuccessPage()),
       ),
 
       GoRoute(
         path: AppRoutes.topUpMethod,
-        builder: (_, _) => const TopUpMethodPage(),
+        pageBuilder: (_, state) => _page(state, const TopUpMethodPage()),
       ),
       GoRoute(
         path: AppRoutes.topUpCode,
-        builder: (_, _) => const ActivationCodePage(),
+        pageBuilder: (_, state) => _page(state, const ActivationCodePage()),
       ),
       GoRoute(
         path: AppRoutes.topUpAgent,
-        builder: (_, _) => const MyQrPage(forAgent: true),
+        pageBuilder: (_, state) =>
+            _page(state, const MyQrPage(forAgent: true)),
       ),
       GoRoute(
         path: AppRoutes.topUpSuccess,
-        builder: (_, _) => const TopUpSuccessPage(),
+        pageBuilder: (_, state) => _page(state, const TopUpSuccessPage()),
       ),
 
-      GoRoute(path: AppRoutes.myQr, builder: (_, _) => const MyQrPage()),
+      GoRoute(
+        path: AppRoutes.myQr,
+        pageBuilder: (_, state) => _page(state, const MyQrPage()),
+      ),
       GoRoute(
         path: AppRoutes.transaction,
-        builder: (_, state) => TransactionDetailsPage(
-          operationId: int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 0,
+        pageBuilder: (_, state) => _page(
+          state,
+          TransactionDetailsPage(
+            operationId:
+                int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 0,
+          ),
         ),
       ),
 
       GoRoute(
         path: AppRoutes.merchantAmount,
-        builder: (_, _) => const MerchantAmountPage(),
+        pageBuilder: (_, state) => _page(state, const MerchantAmountPage()),
       ),
       GoRoute(
         path: AppRoutes.merchantScanAccept,
-        builder: (_, _) => const MerchantScannerPage(),
+        pageBuilder: (_, state) => _page(state, const MerchantScannerPage()),
       ),
       GoRoute(
         path: AppRoutes.merchantResult,
-        builder: (_, _) => const MerchantResultPage(),
+        pageBuilder: (_, state) => _page(state, const MerchantResultPage()),
       ),
       GoRoute(
         path: AppRoutes.merchantLimitExceeded,
@@ -245,6 +267,12 @@ abstract final class AppRouter {
     AppRoutes.history,
     AppRoutes.profile,
   };
+
+  /// Обычный переход по стеку: страница приезжает справа, как в нативной
+  /// навигации — `CupertinoPage` даёт этот слайд на любой платформе, не
+  /// завися от того, подхватила ли тема `pageTransitionsTheme`.
+  static Page<T> _page<T>(GoRouterState state, Widget child) =>
+      CupertinoPage<T>(key: state.pageKey, child: child);
 
   /// Ветки вкладок: живые все, видна одна — с растворением между ними.
   static Widget _branches(

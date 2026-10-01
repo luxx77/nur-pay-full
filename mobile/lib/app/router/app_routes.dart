@@ -33,9 +33,10 @@ abstract final class AppRoutes {
   static const payQr = '/pay/qr';
 
   // ── Перевод ───────────────────────────────────────────────────────────────
-  /// Перевод начинается со сканера: контактов на бэкенде нет, получатель
-  /// определяется по его постоянному QR.
+  /// Перевод начинается со сканера или со списка контактов — получатель
+  /// в обоих случаях определяется по его постоянному QR.
   static const transferScan = '/transfer/scan';
+  static const transferContacts = '/transfer/contacts';
   static const transferAmount = '/transfer/amount';
   static const transferConfirm = '/transfer/confirm';
   static const transferSuccess = '/transfer/success';

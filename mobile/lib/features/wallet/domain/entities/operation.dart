@@ -74,4 +74,9 @@ class Operation {
 
   /// «+120,00» / «−48,50».
   String get signedAmount => amount.signed(incoming: isIncoming);
+
+  /// Сумма за вычетом комиссии — то, что фактически увидел пользователь
+  /// на балансе. Комиссию как отдельную строку не показываем.
+  Money netAmount(Operation? fee) =>
+      fee == null ? amount : amount - fee.amount;
 }

@@ -108,6 +108,14 @@ UUID в нижнем регистре, сумма — целое в теңңе, 
 | GET    | `/operations`                 | история, `limit` ≤ 200, `offset`        |
 | GET    | `/operations/:id`             | операция целиком                        |
 | POST   | `/admin/activation-codes`     | выпуск кода, ключ `admin_api_key`       |
+| GET    | `/admin/activation-codes`     | список кодов, `status`, `limit`, `offset` |
+| GET    | `/admin/users`                | список юзеров/мерчантов с балансом, `search`, `type`, `limit`, `offset` |
+| GET    | `/admin/users/:id`            | карточка юзера с балансом               |
+| GET    | `/admin/users/:id/operations` | история проводок юзера; с `from`/`to` (RFC3339) — окно по времени вместо пагинации |
+| POST   | `/admin/users/:id/topup`      | ручное пополнение счёта без комиссии    |
+| GET    | `/admin/merchants/:id/fees`   | сколько всего комиссии заплатил мерчант |
+| GET    | `/admin/fees/balance`         | накопленный баланс счёта комиссий       |
+| GET    | `/admin/fees/operations`      | лента всех проводок комиссий            |
 
 В `/operations/:id` видны только те проводки, в которых участвует
 спрашивающий: комиссию мерчанта плательщик не видит.

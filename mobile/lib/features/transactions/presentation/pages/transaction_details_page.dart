@@ -11,8 +11,8 @@ import '../widgets/share_sheet.dart';
 
 /// 6.2 · Amal — чек операции.
 ///
-/// Комиссию видно только тому, кто её платил: сервер отдаёт лишь те
-/// проводки, в которых участвует спрашивающий.
+/// Комиссию не показываем отдельной строкой: сумма операции уже отражает
+/// то, что фактически получил или заплатил пользователь (amount − fee).
 class TransactionDetailsPage extends StatelessWidget {
   const TransactionDetailsPage({super.key, required this.operationId});
 
@@ -87,7 +87,7 @@ class _DetailsView extends StatelessWidget {
                       ),
                       Gap(8.h),
                       AmountText(
-                        operation.amount.formatted,
+                        operation.netAmount(fee).formatted,
                         tone: operation.isIncoming
                             ? AmountTone.income
                             : AmountTone.neutral,
@@ -105,8 +105,6 @@ class _DetailsView extends StatelessWidget {
                     rows: [
                       DetailRow('Sene', TmDate.receipt(operation.createdAt)),
                       DetailRow('Görnüşi', operation.type.label),
-                      if (fee != null)
-                        DetailRow('Komissiýa', fee.amount.withCurrency),
                       DetailRow(
                         'Amalyň belgisi',
                         '#${operation.id}',
@@ -117,8 +115,11 @@ class _DetailsView extends StatelessWidget {
                   Gap(18.h),
                   AppButton.outlined(
                     label: 'Çeki paýlaş',
-                    onPressed: () =>
-                        ShareSheet.show(context, operation: operation),
+                    onPressed: () => ShareSheet.show(
+                      context,
+                      operation: operation,
+                      amount: operation.netAmount(fee),
+                    ),
                   ),
                 ],
               ),

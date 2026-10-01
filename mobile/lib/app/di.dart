@@ -6,6 +6,7 @@ import '../core/session/pin_storage.dart';
 import '../core/session/session_storage.dart';
 import '../features/auth/data/repositories/auth_repository_impl.dart';
 import '../features/auth/domain/repositories/auth_repository.dart';
+import '../features/wallet/data/datasources/wallet_local_data_source.dart';
 import '../features/wallet/data/datasources/wallet_remote_data_source.dart';
 import '../features/wallet/data/repositories/wallet_repository_impl.dart';
 import '../features/wallet/domain/repositories/wallet_repository.dart';
@@ -30,7 +31,10 @@ class Dependencies extends StatelessWidget {
         create: (_) => AuthRepositoryImpl(client, const SessionStorage()),
       ),
       RepositoryProvider<WalletRepository>(
-        create: (_) => WalletRepositoryImpl(WalletRemoteDataSource(client)),
+        create: (_) => WalletRepositoryImpl(
+          WalletRemoteDataSource(client),
+          const WalletLocalDataSource(),
+        ),
       ),
     ],
     child: child,

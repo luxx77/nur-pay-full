@@ -13,3 +13,17 @@ SELECT * FROM users WHERE id = $1;
 
 -- name: GetUserByPublicQRUUID :one
 SELECT * FROM users WHERE public_qr_uuid = $1;
+
+-- name: ListUsersByPhones :many
+-- Кто из списка номеров (контактов с телефона) уже в Nur Pay — для
+-- экрана «выбрать из контактов». Системные счета не отдаём: на них
+-- не переводят.
+--
+-- Сравниваем по последним 8 цифрам, а не строкой целиком: код страны в
+-- приложении всегда +993, а в телефонной книге номера хранятся как
+-- попало — с ним, без него, с пробелами. Восемь цифр — это ровно
+-- локальный номер абонента (см. валидацию на экране входа).
+SELECT * FROM users
+WHERE type = 'user'
+  AND right(regexp_replace(coalesce(phone, ''), '\D', '', 'g'), 8)
+      = ANY(sqlc.arg(phones)::text[]);

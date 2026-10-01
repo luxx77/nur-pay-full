@@ -62,7 +62,7 @@ class TopUpSuccessPage extends StatelessWidget {
                   ),
                   Gap(14.h),
                   AmountText(
-                    topUp.amount.formatted,
+                    topUp.netAmount(fee).formatted,
                     sign: '+',
                     tone: AmountTone.income,
                   ),
@@ -78,8 +78,6 @@ class TopUpSuccessPage extends StatelessWidget {
               DetailList.filled(
                 rows: [
                   DetailRow('Sene', TmDate.receipt(topUp.createdAt)),
-                  if (fee != null)
-                    DetailRow('Komissiýa', fee.amount.withCurrency),
                   DetailRow('Amalyň belgisi', '#${topUp.id}', mono: true),
                 ],
               ),

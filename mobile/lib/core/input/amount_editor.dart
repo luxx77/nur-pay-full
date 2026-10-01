@@ -4,76 +4,52 @@ import '../money.dart';
 
 /// Состояние ввода суммы с приложенческой клавиатуры.
 ///
-/// Правила как в макете: одна запятая, не больше двух знаков после неё,
-/// целая часть — до семи цифр.
+/// Ввод — в теňňe, как на кассовых терминалах: каждая нажатая цифра
+/// становится новым младшим разрядом, а запятая перед последними двумя
+/// цифрами фиксирована и никогда не набирается руками. Чтобы перевести
+/// 1 манат (100 теňňe), набирают «1», «0», «0» подряд — и только тогда
+/// сумма встаёт на место: 100 теňňe = 1,00 TMT.
 class AmountEditor extends ChangeNotifier {
-  AmountEditor({Money initial = Money.zero})
-    : _raw = initial.isZero ? '' : _rawFrom(initial);
+  AmountEditor({Money initial = Money.zero}) : _minor = initial.minor;
 
+  // Целая часть (манаты) — не больше семи цифр, как в макете.
   static const _maxWholeDigits = 7;
-  static const _maxFractionDigits = 2;
 
-  String _raw;
+  int _minor;
 
-  static String _rawFrom(Money value) {
-    final whole = value.minor ~/ 100;
-    final fraction = value.minor % 100;
-    return fraction == 0
-        ? '$whole'
-        : '$whole,${fraction.toString().padLeft(2, '0')}';
-  }
+  Money get value => Money(_minor);
 
-  Money get value => Money.parse(_raw);
+  bool get isEmpty => _minor == 0;
 
-  bool get isEmpty => _raw.isEmpty;
-
-  /// Что показывать на экране: пусто трактуем как «0».
-  String get display {
-    if (_raw.isEmpty) return '0';
-    final parts = _raw.split(',');
-    final grouped = StringBuffer();
-    final whole = parts.first.isEmpty ? '0' : parts.first;
-    for (var i = 0; i < whole.length; i++) {
-      if (i > 0 && (whole.length - i) % 3 == 0) grouped.write(' ');
-      grouped.write(whole[i]);
-    }
-    return parts.length == 1 ? '$grouped' : '$grouped,${parts[1]}';
-  }
+  /// Что показывать на экране: пусто — «00,00», дальше как обычная сумма.
+  String get display => _minor == 0 ? '00,00' : Money(_minor).formatted;
 
   void push(String key) {
-    if (key == ',') {
-      if (_raw.contains(',')) return;
-      _raw = _raw.isEmpty ? '0,' : '$_raw,';
-      notifyListeners();
-      return;
-    }
+    final digit = int.tryParse(key);
+    // Запятая больше не набирается: разделитель фиксирован клавиатурой.
+    if (digit == null) return;
 
-    final parts = _raw.split(',');
-    if (parts.length == 2) {
-      if (parts[1].length >= _maxFractionDigits) return;
-    } else {
-      if (parts.first.length >= _maxWholeDigits) return;
-      // Лидирующий ноль заменяем, а не наращиваем.
-      if (_raw == '0') _raw = '';
-    }
-    _raw += key;
+    final next = _minor * 10 + digit;
+    if ((next ~/ 100).toString().length > _maxWholeDigits) return;
+
+    _minor = next;
     notifyListeners();
   }
 
   void backspace() {
-    if (_raw.isEmpty) return;
-    _raw = _raw.substring(0, _raw.length - 1);
+    if (_minor == 0) return;
+    _minor ~/= 10;
     notifyListeners();
   }
 
   void clear() {
-    if (_raw.isEmpty) return;
-    _raw = '';
+    if (_minor == 0) return;
+    _minor = 0;
     notifyListeners();
   }
 
   void setValue(Money amount) {
-    _raw = amount.isZero ? '' : _rawFrom(amount);
+    _minor = amount.minor;
     notifyListeners();
   }
 }

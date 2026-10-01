@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
+import '../foundation/app_radius.dart';
 import 'scanner_frame.dart';
 
-/// Полноэкранный сканер: картинка с камеры, затемнение с окном и рамка.
+/// Полноэкранный сканер: картинка с камеры, рамка с уголками и линией,
+/// подсказка над рамкой и кнопки «Галерея» / вспышка под ней.
 ///
-/// Если камеры нет — например в симуляторе — остаётся тёмный фон, а окно
-/// работает как кнопка: нажатие отдаёт [onSimulate]. Так сценарий кассы
-/// проходится и без железа.
+/// Никакого затемнения — камера видна целиком, рамка лишь очерчивает
+/// зону кадра.
+///
+/// Если камеры нет — например в симуляторе — остаётся нейтральный фон, а
+/// рамка работает как кнопка: нажатие отдаёт [onSimulate]. Так сценарий
+/// кассы проходится и без железа.
 class ScannerView extends StatefulWidget {
   const ScannerView({
     super.key,
     required this.accent,
     required this.onDetect,
+    required this.hint,
     this.onSimulate,
     this.active = true,
     this.windowSize,
@@ -24,7 +31,10 @@ class ScannerView extends StatefulWidget {
   /// Содержимое распознанного кода.
   final ValueChanged<String> onDetect;
 
-  /// Нажатие на окно, когда камера недоступна.
+  /// Подсказка над рамкой.
+  final String hint;
+
+  /// Нажатие на рамку, когда камера недоступна.
   final VoidCallback? onSimulate;
 
   /// Пока `false`, распознавание не срабатывает — код уже принят.
@@ -44,6 +54,7 @@ class _ScannerViewState extends State<ScannerView> {
 
   bool _cameraFailed = false;
   bool _handled = false;
+  bool _pickingFromGallery = false;
 
   @override
   void didUpdateWidget(ScannerView old) {
@@ -58,105 +69,182 @@ class _ScannerViewState extends State<ScannerView> {
   }
 
   void _onDetect(BarcodeCapture capture) {
-    if (!widget.active || _handled) return;
     final raw = capture.barcodes
         .map((b) => b.rawValue)
         .whereType<String>()
         .firstOrNull;
-    if (raw == null) return;
+    _handle(raw);
+  }
+
+  void _handle(String? raw) {
+    if (!widget.active || _handled || raw == null) return;
     _handled = true;
     widget.onDetect(raw);
+  }
+
+  Future<void> _pickFromGallery() async {
+    if (!widget.active || _pickingFromGallery) return;
+    setState(() => _pickingFromGallery = true);
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null || !mounted) return;
+      final capture = await _controller.analyzeImage(image.path);
+      final raw = capture?.barcodes
+          .map((b) => b.rawValue)
+          .whereType<String>()
+          .firstOrNull;
+      _handle(raw);
+    } finally {
+      if (mounted) setState(() => _pickingFromGallery = false);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    final window = widget.windowSize ?? 262.r;
+    final text = Theme.of(context).textTheme;
+    final window = widget.windowSize ?? 260.r;
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final size = constraints.biggest;
-        final rect = Rect.fromCenter(
-          center: Offset(size.width / 2, size.height / 2 - 24.h),
-          width: window,
-          height: window,
-        );
+    return GestureDetector(
+      onTap: _cameraFailed ? widget.onSimulate : null,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          if (!_cameraFailed)
+            MobileScanner(
+              controller: _controller,
+              onDetect: _onDetect,
+              errorBuilder: (_, _) {
+                // Камеры нет — уходим в ручной режим, но не роняем экран.
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (mounted && !_cameraFailed) {
+                    setState(() => _cameraFailed = true);
+                  }
+                });
+                return ColoredBox(color: cs.surface);
+              },
+            )
+          else
+            ColoredBox(color: cs.surface),
 
-        return Stack(
-          fit: StackFit.expand,
-          children: [
-            if (!_cameraFailed)
-              MobileScanner(
-                controller: _controller,
-                onDetect: _onDetect,
-                errorBuilder: (_, _) {
-                  // Камеры нет — уходим в ручной режим, но не роняем экран.
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    if (mounted && !_cameraFailed) {
-                      setState(() => _cameraFailed = true);
-                    }
-                  });
-                  return ColoredBox(color: cs.surface);
-                },
-              )
-            else
-              ColoredBox(color: cs.surface),
-
-            // Затемнение с прозрачным окном — взгляд сам идёт в кадр.
-            IgnorePointer(
-              child: CustomPaint(
-                painter: _WindowScrimPainter(
-                  window: rect,
-                  color: cs.surface.withValues(
-                    alpha: _cameraFailed ? 0.4 : 0.72,
+          Center(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 8.h),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    widget.hint,
+                    textAlign: TextAlign.center,
+                    style: text.bodyMedium?.copyWith(
+                      color: widget.active ? cs.onSurface : widget.accent,
+                    ),
                   ),
-                  radius: 28.r,
-                ),
+                  SizedBox(height: 20.h),
+                  IgnorePointer(
+                    child: ScannerFrame(
+                      accent: widget.accent,
+                      size: window,
+                      scanning: widget.active,
+                    ),
+                  ),
+                  SizedBox(height: 40.h),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _GalleryPillButton(
+                        loading: _pickingFromGallery,
+                        onTap: widget.active ? _pickFromGallery : null,
+                      ),
+                      SizedBox(width: 12.w),
+                      _FlashButton(
+                        controller: _controller,
+                        enabled: !_cameraFailed && widget.active,
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-
-            Positioned.fromRect(
-              rect: rect,
-              child: GestureDetector(
-                onTap: widget.onSimulate,
-                child: ScannerFrame(
-                  accent: widget.accent,
-                  size: window,
-                  scanning: widget.active,
-                  transparent: !_cameraFailed,
-                ),
-              ),
-            ),
-          ],
-        );
-      },
+          ),
+        ],
+      ),
     );
   }
 }
 
-class _WindowScrimPainter extends CustomPainter {
-  const _WindowScrimPainter({
-    required this.window,
-    required this.color,
-    required this.radius,
-  });
+/// Пилюля «Galereýadan saýla» — выбор фото с кодом вместо камеры.
+class _GalleryPillButton extends StatelessWidget {
+  const _GalleryPillButton({required this.loading, required this.onTap});
 
-  final Rect window;
-  final Color color;
-  final double radius;
+  final bool loading;
+  final VoidCallback? onTap;
 
   @override
-  void paint(Canvas canvas, Size size) {
-    final overlay = Path()..addRect(Offset.zero & size);
-    final hole = Path()
-      ..addRRect(RRect.fromRectAndRadius(window, Radius.circular(radius)));
-    canvas.drawPath(
-      Path.combine(PathOperation.difference, overlay, hole),
-      Paint()..color = color,
-    );
-  }
+  Widget build(BuildContext context) => Material(
+    color: Colors.white,
+    borderRadius: AppRadius.pillAll,
+    clipBehavior: Clip.antiAlias,
+    child: InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 44.h,
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        alignment: Alignment.center,
+        child: loading
+            ? SizedBox(
+                width: 18.r,
+                height: 18.r,
+                child: const CircularProgressIndicator(strokeWidth: 2),
+              )
+            : Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.photo_library_outlined, size: 18.r),
+                  SizedBox(width: 8.w),
+                  Text(
+                    'Galereýadan saýla',
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+      ),
+    ),
+  );
+}
+
+/// Круглая кнопка фонарика — включает вспышку камеры для тёмных мест.
+class _FlashButton extends StatelessWidget {
+  const _FlashButton({required this.controller, required this.enabled});
+
+  final MobileScannerController controller;
+  final bool enabled;
 
   @override
-  bool shouldRepaint(_WindowScrimPainter old) =>
-      old.window != window || old.color != color || old.radius != radius;
+  Widget build(BuildContext context) => ValueListenableBuilder(
+    valueListenable: controller,
+    builder: (context, state, _) {
+      final on = state.torchState == TorchState.on;
+
+      return Material(
+        color: Colors.black.withValues(alpha: 0.35),
+        shape: const CircleBorder(),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: enabled ? controller.toggleTorch : null,
+          child: SizedBox(
+            width: 44.h,
+            height: 44.h,
+            child: Icon(
+              on ? Icons.flash_on : Icons.flash_off,
+              size: 20.r,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }

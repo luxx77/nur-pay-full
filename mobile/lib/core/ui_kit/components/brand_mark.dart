@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../theme/app_palette.dart';
 import '../foundation/app_radius.dart';
 
-/// Знак Nur Pay: скруглённый квадрат бренда с жёлтой точкой внутри.
+/// Знак Nur Pay: иконка приложения (`assets/icon/nur_pay_icon.png`).
 class BrandMark extends StatelessWidget {
   const BrandMark({super.key, this.size});
 
@@ -12,25 +11,12 @@ class BrandMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
     final side = size ?? 28.r;
 
-    return Container(
+    return Image.asset(
+      'assets/icon/nur_pay_icon.png',
       width: side,
       height: side,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: cs.primary,
-        borderRadius: BorderRadius.circular(side * 0.29),
-      ),
-      child: Container(
-        width: side * 0.36,
-        height: side * 0.36,
-        decoration: const BoxDecoration(
-          color: AppPalette.logoDot,
-          shape: BoxShape.circle,
-        ),
-      ),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/money.dart';
 import '../../../../core/tm_date.dart';
 import '../../../../core/ui_kit/ui_kit.dart';
 import '../../../wallet/domain/entities/operation.dart';
@@ -11,25 +12,32 @@ import '../../../wallet/domain/entities/operation.dart';
 /// Системного share здесь пока нет — вместо него честное копирование,
 /// чтобы действие что-то делало уже сейчас.
 class ShareSheet extends StatelessWidget {
-  const ShareSheet({super.key, required this.operation});
+  const ShareSheet({super.key, required this.operation, this.amount});
 
   final Operation operation;
 
+  /// Сумма к показу, если отличается от [operation.amount]
+  /// (например, за вычетом комиссии). По умолчанию берётся из операции.
+  final Money? amount;
+
+  /// [amount] — сумма к показу, если отличается от [operation.amount]
+  /// (например, за вычетом комиссии). По умолчанию берётся из операции.
   static Future<void> show(
     BuildContext context, {
     required Operation operation,
+    Money? amount,
   }) => showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     barrierColor: Theme.of(context).colorScheme.scrim.withValues(alpha: 0.42),
-    builder: (_) => ShareSheet(operation: operation),
+    builder: (_) => ShareSheet(operation: operation, amount: amount),
   );
 
   String get _receipt => [
     'Nur Pay · çek',
     '${operation.isIncoming ? 'Alyndy' : 'Geçirildi'}: '
-        '${operation.amount.withCurrency}',
+        '${(amount ?? operation.amount).withCurrency}',
     operation.counterparty.title,
     TmDate.receipt(operation.createdAt),
     '#${operation.id}',

@@ -27,4 +27,21 @@ abstract final class OperationDto {
           .cast<Map<String, dynamic>>()
           .map(fromJson)
           .toList();
+
+  /// Тот же формат, что и ответ API — чтобы [fromJson] годился и для
+  /// локального кеша.
+  static Map<String, dynamic> toJson(Operation operation) => {
+    'id': operation.id,
+    'type': operation.type.api,
+    'direction': operation.direction.api,
+    'amount': operation.amount.minor,
+    'parent_id': operation.parentId,
+    'created_at': operation.createdAt.toIso8601String(),
+    'counterparty': {
+      'user_id': operation.counterparty.userId,
+      'user_type': operation.counterparty.isMerchant ? 'merchant' : 'user',
+      'display_name': operation.counterparty.displayName,
+      'phone': operation.counterparty.phone,
+    },
+  };
 }

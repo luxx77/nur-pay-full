@@ -24,32 +24,49 @@ void main() {
   });
 
   group('AmountEditor', () {
-    test('набор цифр и запятой', () {
-      final editor = AmountEditor()
-        ..push('4')
-        ..push('8')
-        ..push(',')
-        ..push('5');
-      expect(editor.display, '48,5');
-      expect(editor.value, Money.major(48.5));
+    test('пустое состояние — «00,00»', () {
+      expect(AmountEditor().display, '00,00');
     });
 
-    test('не пускает вторую запятую и третий знак после неё', () {
+    test('цифры набираются в теňňe: каждая — новый младший разряд', () {
       final editor = AmountEditor()
         ..push('1')
-        ..push(',')
-        ..push('2')
-        ..push('5')
-        ..push(',')
-        ..push('9');
-      expect(editor.display, '1,25');
+        ..push('0')
+        ..push('0');
+      expect(editor.display, '1,00');
+      expect(editor.value, Money.major(1)); // 100 теňňe = 1 манат
     });
 
-    test('лидирующий ноль заменяется, а не наращивается', () {
+    test('1 манат — это «100» на клавиатуре', () {
       final editor = AmountEditor()
+        ..push('1')
         ..push('0')
-        ..push('5');
-      expect(editor.display, '5');
+        ..push('0');
+      expect(editor.value, Money.major(1));
+    });
+
+    test('запятая с клавиатуры не набирается — разделитель фиксирован', () {
+      final editor = AmountEditor()
+        ..push('4')
+        ..push(',')
+        ..push('8');
+      expect(editor.display, '0,48');
+    });
+
+    test('backspace убирает последний набранный разряд', () {
+      final editor = AmountEditor()
+        ..push('1')
+        ..push('2')
+        ..push('5')
+        ..backspace();
+      expect(editor.display, '0,12');
+    });
+
+    test('backspace до пустого состояния возвращает «00,00»', () {
+      final editor = AmountEditor()
+        ..push('5')
+        ..backspace();
+      expect(editor.display, '00,00');
     });
   });
 

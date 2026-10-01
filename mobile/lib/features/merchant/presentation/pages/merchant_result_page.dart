@@ -66,7 +66,7 @@ class MerchantResultPage extends StatelessWidget {
                           Text('Üstünlikli', style: text.headlineLarge),
                           Gap(6.h),
                           AmountText(
-                            payment.amount.formatted,
+                            payment.netAmount(fee).formatted,
                             size: AmountSize.hero,
                           ),
                           Gap(6.h),
@@ -81,8 +81,6 @@ class MerchantResultPage extends StatelessWidget {
                       DetailList.filled(
                         rows: [
                           DetailRow('Sene', TmDate.receipt(payment.createdAt)),
-                          if (fee != null)
-                            DetailRow('Komissiýa', fee.amount.withCurrency),
                           DetailRow(
                             'Amalyň belgisi',
                             '#${payment.id}',
@@ -107,8 +105,11 @@ class MerchantResultPage extends StatelessWidget {
                   child: AppFab(
                     size: 56.r,
                     outlined: true,
-                    onPressed: () =>
-                        ShareSheet.show(context, operation: payment),
+                    onPressed: () => ShareSheet.show(
+                      context,
+                      operation: payment,
+                      amount: payment.netAmount(fee),
+                    ),
                     child: const Icon(Icons.ios_share_rounded),
                   ),
                 ),

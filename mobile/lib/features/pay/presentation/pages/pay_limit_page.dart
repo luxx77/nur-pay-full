@@ -129,7 +129,6 @@ class _PayLimitPageState extends State<PayLimitPage> {
                   ),
                   const Spacer(),
                   NumericKeypad(
-                    layout: KeypadLayout.decimal,
                     onKey: _editor.push,
                     onBackspace: _editor.backspace,
                     onBackspaceLongPress: _editor.clear,

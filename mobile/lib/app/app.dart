@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../core/connectivity/connectivity_cubit.dart';
 import '../core/network/api_client.dart';
+import '../core/network/network_error_toast.dart';
 import '../core/session/pin_storage.dart';
 import '../core/theme/theme.dart';
 import '../features/auth/domain/repositories/auth_repository.dart';
@@ -34,6 +36,7 @@ class _AppScope extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MultiBlocProvider(
     providers: [
+      BlocProvider(create: (_) => ConnectivityCubit()),
       BlocProvider(
         // Сессия читается с устройства сразу: пока её нет, показываем
         // заставку, а не мигаем экраном входа.
@@ -88,6 +91,7 @@ class _AppRouterHostState extends State<_AppRouterHost> {
       darkTheme: AppTheme.dark(AppRole.customer),
       themeMode: ThemeMode.light,
       routerConfig: _router,
+      builder: (context, child) => NetworkErrorToast(child: child!),
     ),
   );
 }

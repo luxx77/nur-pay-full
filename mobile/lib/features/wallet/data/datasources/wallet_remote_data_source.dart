@@ -15,6 +15,9 @@ class WalletRemoteDataSource {
   Future<Map<String, dynamic>> userByQr(String publicQrUuid) =>
       _client.get('/users/by-qr/$publicQrUuid');
 
+  Future<Map<String, dynamic>> lookupPhones(List<String> phones) =>
+      _client.post('/users/lookup-phones', body: {'phones': phones});
+
   Future<Map<String, dynamic>> operations({
     required int limit,
     required int offset,

@@ -106,7 +106,7 @@ class AppExtendedFab extends StatelessWidget {
           onTap: onPressed,
           onLongPress: onLongPress,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 15.w),
             child: SizedBox(
               height: 64.h,
               child: Row(

@@ -61,6 +61,7 @@ const (
 	LedgerEntryTypeP2p             LedgerEntryType = "p2p"
 	LedgerEntryTypeMerchantPayment LedgerEntryType = "merchant_payment"
 	LedgerEntryTypeFee             LedgerEntryType = "fee"
+	LedgerEntryTypeAdminTopup      LedgerEntryType = "admin_topup"
 )
 
 func (e *LedgerEntryType) Scan(src interface{}) error {

@@ -4,15 +4,15 @@ services:
     container_name: nurpay-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: nurpay
-      POSTGRES_PASSWORD: nurpay
-      POSTGRES_DB: nurpay
+      POSTGRES_USER: ${POSTGRES_USER:-nurpay}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-nurpay}
+      POSTGRES_DB: ${POSTGRES_DB:-nurpay}
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - nurpay-pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U nurpay -d nurpay"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-nurpay} -d ${POSTGRES_DB:-nurpay}"]
       interval: 3s
       timeout: 3s
       retries: 10

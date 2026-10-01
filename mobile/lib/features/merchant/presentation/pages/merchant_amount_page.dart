@@ -52,87 +52,79 @@ class _MerchantAmountPageState extends State<MerchantAmountPage> {
 
         return AppScaffold(
           padded: false,
-          body: Stack(
+          body: Column(
             children: [
-              Column(
-                children: [
-                  const AppTopBar(title: 'Töleg kabul et'),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(20.w, 8.h, 20.w, 20.h),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(top: 10.h, bottom: 14.h),
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(color: cs.outlineVariant),
+              const AppTopBar(title: 'Töleg kabul et'),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(20.w, 8.h, 20.w, 20.h),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(top: 10.h, bottom: 14.h),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: cs.outlineVariant),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 26.r,
+                              height: 26.r,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: cs.primaryContainer,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                CupertinoIcons.arrow_down,
+                                size: 14.r,
+                                color: cs.onPrimaryContainer,
                               ),
                             ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 26.r,
-                                  height: 26.r,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: cs.primaryContainer,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    CupertinoIcons.arrow_down,
-                                    size: 14.r,
-                                    color: cs.onPrimaryContainer,
-                                  ),
+                            SizedBox(width: 11.w),
+                            Expanded(
+                              child: Text(
+                                'Müşderiniň QR kody möçberi saklamaýar '
+                                '— ilki möçberi giriziň',
+                                style: text.bodySmall?.copyWith(
+                                  fontSize: 13.5.sp,
+                                  color: cs.onSurfaceVariant,
                                 ),
-                                SizedBox(width: 11.w),
-                                Expanded(
-                                  child: Text(
-                                    'Müşderiniň QR kody möçberi saklamaýar '
-                                    '— ilki möçberi giriziň',
-                                    style: text.bodySmall?.copyWith(
-                                      fontSize: 13.5.sp,
-                                      color: cs.onSurfaceVariant,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                          Gap(14.h),
-                          Center(
-                            child: AmountText(
-                              _editor.display,
-                              size: AmountSize.display,
-                            ),
-                          ),
-                          const Spacer(),
-                          NumericKeypad(
-                            layout: KeypadLayout.decimal,
-                            onKey: _editor.push,
-                            onBackspace: _editor.backspace,
-                            onBackspaceLongPress: _editor.clear,
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
+                      Gap(14.h),
+                      Center(
+                        child: AmountText(
+                          _editor.display,
+                          size: AmountSize.display,
+                        ),
+                      ),
+                      const Spacer(),
+                      AppButton.filled(
+                        label: 'Dowam et',
+                        onPressed: canScan
+                            ? () {
+                                context.read<MerchantPaymentCubit>().setAmount(
+                                  _editor.value,
+                                );
+                                context.push(AppRoutes.merchantScanAccept);
+                              }
+                            : null,
+                      ),
+                      Gap(14.h),
+                      NumericKeypad(
+                        onKey: _editor.push,
+                        onBackspace: _editor.backspace,
+                        onBackspaceLongPress: _editor.clear,
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              Positioned(
-                right: 20.w,
-                bottom: 104.h,
-                child: AppFab(
-                  onPressed: canScan
-                      ? () {
-                          context.read<MerchantPaymentCubit>().setAmount(
-                            _editor.value,
-                          );
-                          context.push(AppRoutes.merchantScanAccept);
-                        }
-                      : null,
-                  child: const Icon(Icons.qr_code_scanner_rounded),
                 ),
               ),
             ],

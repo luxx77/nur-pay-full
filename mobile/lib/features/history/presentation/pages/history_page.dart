@@ -198,18 +198,15 @@ class _OperationsTab extends StatelessWidget {
                     );
                   }
                 }
-                return Entrance(
-                  index: index,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SectionLabel(
-                        header,
-                        padding: EdgeInsets.fromLTRB(4.w, 14.h, 4.w, 8.h),
-                      ),
-                      AppCard.list(child: Column(children: rows)),
-                    ],
-                  ),
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SectionLabel(
+                      header,
+                      padding: EdgeInsets.fromLTRB(4.w, 14.h, 4.w, 8.h),
+                    ),
+                    AppCard.list(child: Column(children: rows)),
+                  ],
                 );
               },
             ),

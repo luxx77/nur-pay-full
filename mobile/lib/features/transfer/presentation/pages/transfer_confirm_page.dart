@@ -69,6 +69,15 @@ class TransferConfirmPage extends StatelessWidget {
                         recipient?.title ?? 'Nur Pay',
                         style: text.titleLarge,
                       ),
+                      if (recipient?.isMerchant == true) ...[
+                        Gap(2.h),
+                        Text(
+                          'Söwdagär',
+                          style: text.bodySmall?.copyWith(
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        ),
+                      ],
                       Gap(6.h),
                       AmountText(state.amount.formatted),
                     ],

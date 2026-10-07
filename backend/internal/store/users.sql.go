@@ -51,14 +51,14 @@ func (q *Queries) GetUserByPublicQRUUID(ctx context.Context, publicQrUuid uuid.U
 
 const listUsersByPhones = `-- name: ListUsersByPhones :many
 SELECT id, phone, type, display_name, public_qr_uuid, payment_secret, created_at FROM users
-WHERE type = 'user'
+WHERE type IN ('user', 'merchant')
   AND right(regexp_replace(coalesce(phone, ''), '\D', '', 'g'), 8)
       = ANY($1::text[])
 `
 
 // Кто из списка номеров (контактов с телефона) уже в Nur Pay — для
-// экрана «выбрать из контактов». Системные счета не отдаём: на них
-// не переводят.
+// экрана «выбрать из контактов». Юзеры и мерчанты; системные счета не
+// отдаём: на них не переводят.
 //
 // Сравниваем по последним 8 цифрам, а не строкой целиком: код страны в
 // приложении всегда +993, а в телефонной книге номера хранятся как

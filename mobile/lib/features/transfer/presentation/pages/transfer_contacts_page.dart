@@ -198,7 +198,9 @@ class _ContactTile extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
       ),
       subtitle: Text(
-        entry.number,
+        entry.user?.isMerchant == true
+            ? '${entry.number} · Söwdagär'
+            : entry.number,
         style: Theme.of(
           context,
         ).textTheme.bodySmall?.copyWith(color: cs.onSurfaceVariant),

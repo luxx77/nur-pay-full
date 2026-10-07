@@ -23,8 +23,12 @@ type transferRequest struct {
 	Amount int64 `json:"amount"`
 }
 
-// createTransfer — P2P-перевод. Комиссии нет: списываем ровно столько,
-// сколько получает вторая сторона.
+// createTransfer — перевод по постоянному QR или из контактов.
+//
+// Юзеру: комиссии нет, списываем ровно столько, сколько получает вторая
+// сторона. Мерчанту: это оплата в его пользу, поэтому проводка идёт как
+// merchant_payment, а комиссию платит он (как при оплате по платёжному QR);
+// отправитель всё равно платит ровно req.Amount.
 func (s *Server) createTransfer(c *gin.Context) {
 	sender := CurrentUser(c)
 	ctx := c.Request.Context()
@@ -68,6 +72,11 @@ func (s *Server) createTransfer(c *gin.Context) {
 		return
 	}
 
+	entryType := store.LedgerEntryTypeP2p
+	if recipient.Type == store.UserTypeMerchant {
+		entryType = store.LedgerEntryTypeMerchantPayment
+	}
+
 	var entry store.Ledger
 	err = store.InTx(ctx, s.pool, func(q *store.Queries) error {
 		// Порядок важен: сначала блокировка плательщика, потом чтение
@@ -89,7 +98,25 @@ func (s *Server) createTransfer(c *gin.Context) {
 			FromUserID: sender.ID,
 			ToUserID:   recipient.ID,
 			Amount:     req.Amount,
-			Type:       store.LedgerEntryTypeP2p,
+			Type:       entryType,
+		})
+		if err != nil {
+			return err
+		}
+
+		if recipient.Type != store.UserTypeMerchant {
+			return nil
+		}
+		fee := feeFor(req.Amount, s.cfg.MerchantPaymentFeePercent)
+		if fee == 0 {
+			return nil
+		}
+		_, err = q.InsertLedgerEntry(ctx, store.InsertLedgerEntryParams{
+			FromUserID: recipient.ID,
+			ToUserID:   store.FeesUserID,
+			Amount:     fee,
+			Type:       store.LedgerEntryTypeFee,
+			ParentID:   &entry.ID,
 		})
 		return err
 	})

@@ -33,8 +33,8 @@ class _OtpPageState extends State<OtpPage> {
   bool _busy = false;
   String? _error;
 
-  /// Номер в том виде, в каком его ждёт сервер.
-  String get _phone => '+993 ${widget.phone}'.trim();
+  /// Номер в том виде, в каком его ждёт сервер: +99361188798, без пробелов.
+  String get _phone => '+993${widget.phone.replaceAll(RegExp(r'\D'), '')}';
 
   @override
   void initState() {

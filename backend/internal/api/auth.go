@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"errors"
 	"net/http"
+	"regexp"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -26,6 +27,27 @@ const contextUserKey = "nurpay.user"
 
 type loginRequest struct {
 	Phone string `json:"phone"`
+}
+
+// phonePattern — канонический номер: «+», затем 8–15 цифр, без пробелов.
+var phonePattern = regexp.MustCompile(`^\+\d{8,15}$`)
+
+// normalizePhone приводит номер к виду +99361188798: выкидывает всё, кроме
+// цифр и ведущего «+» (пробелы, дефисы, скобки). Иначе один и тот же номер,
+// набранный по-разному, плодил бы дубликаты аккаунтов.
+func normalizePhone(raw string) (string, bool) {
+	raw = strings.TrimSpace(raw)
+	var b strings.Builder
+	for i, r := range raw {
+		switch {
+		case r >= '0' && r <= '9':
+			b.WriteRune(r)
+		case r == '+' && i == 0:
+			b.WriteRune(r)
+		}
+	}
+	phone := b.String()
+	return phone, phonePattern.MatchString(phone)
 }
 
 // userResponse — то, что фронт получает после входа.
@@ -59,9 +81,10 @@ func (s *Server) login(c *gin.Context) {
 		return
 	}
 
-	phone := strings.TrimSpace(req.Phone)
-	if phone == "" {
-		Fail(c, http.StatusBadRequest, CodeBadRequest, "phone is required")
+	phone, ok := normalizePhone(req.Phone)
+	if !ok {
+		Fail(c, http.StatusBadRequest, CodeBadRequest,
+			"phone must look like +99361188798")
 		return
 	}
 

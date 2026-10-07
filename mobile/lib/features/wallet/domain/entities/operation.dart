@@ -34,17 +34,22 @@ class Counterparty {
   const Counterparty({
     required this.userId,
     required this.isMerchant,
+    this.isSystem = false,
     this.displayName,
     this.phone,
   });
 
   final String userId;
   final bool isMerchant;
+
+  /// Системный счёт (выпуск денег, комиссии): имени для людей у него нет,
+  /// в display_name лежит служебное «issuance».
+  final bool isSystem;
   final String? displayName;
   final String? phone;
 
   /// Как назвать сторону в интерфейсе.
-  String get title => displayName ?? phone ?? 'Nur Pay';
+  String get title => isSystem ? 'Nur Pay' : displayName ?? phone ?? 'Nur Pay';
 }
 
 /// Проводка из книги. Приложение их только читает — меняет только бэкенд.
@@ -77,6 +82,5 @@ class Operation {
 
   /// Сумма за вычетом комиссии — то, что фактически увидел пользователь
   /// на балансе. Комиссию как отдельную строку не показываем.
-  Money netAmount(Operation? fee) =>
-      fee == null ? amount : amount - fee.amount;
+  Money netAmount(Operation? fee) => fee == null ? amount : amount - fee.amount;
 }

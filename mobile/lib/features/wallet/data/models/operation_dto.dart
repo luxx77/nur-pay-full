@@ -14,6 +14,7 @@ abstract final class OperationDto {
       counterparty: Counterparty(
         userId: cp['user_id'] as String,
         isMerchant: cp['user_type'] == 'merchant',
+        isSystem: cp['user_type'] == 'system',
         displayName: cp['display_name'] as String?,
         phone: cp['phone'] as String?,
       ),
@@ -39,7 +40,11 @@ abstract final class OperationDto {
     'created_at': operation.createdAt.toIso8601String(),
     'counterparty': {
       'user_id': operation.counterparty.userId,
-      'user_type': operation.counterparty.isMerchant ? 'merchant' : 'user',
+      'user_type': operation.counterparty.isMerchant
+          ? 'merchant'
+          : operation.counterparty.isSystem
+          ? 'system'
+          : 'user',
       'display_name': operation.counterparty.displayName,
       'phone': operation.counterparty.phone,
     },

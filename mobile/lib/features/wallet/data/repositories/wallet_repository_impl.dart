@@ -25,9 +25,9 @@ class WalletRepositoryImpl implements WalletRepository {
       final balance = Money(results[0]['balance'] as int);
       // Комиссию в списках не показываем — она не отдельная операция
       // для пользователя, а часть суммы той, к которой относится.
-      final operations = OperationDto.listFrom(
-        results[1],
-      ).where((op) => !op.isFee).toList();
+      final operations = OperationDto.listFrom(results[1])
+          .where((op) => !op.isFee)
+          .toList();
       final updatedAt = DateTime.now();
       await _local.save(
         balance: balance,

@@ -11,7 +11,4 @@ function requireEnv(key: string): string {
 
 export const env = {
   apiBaseUrl: requireEnv("VITE_API_BASE_URL").replace(/\/+$/, ""),
-  adminApiKey: requireEnv("VITE_ADMIN_API_KEY"),
-  adminUsername: requireEnv("VITE_ADMIN_USERNAME"),
-  adminPassword: requireEnv("VITE_ADMIN_PASSWORD"),
 };

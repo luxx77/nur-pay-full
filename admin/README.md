@@ -8,7 +8,7 @@ React + TypeScript + Vite. Показывает пользователей и м
 ## Запуск
 
 ```bash
-cp .env.example .env   # задать VITE_API_BASE_URL и VITE_ADMIN_API_KEY
+cp .env.example .env   # задать VITE_API_BASE_URL
 npm install
 npm run dev
 ```
@@ -18,14 +18,12 @@ npm run dev
 | переменная            | что это                                                  |
 |------------------------|-----------------------------------------------------------|
 | `VITE_API_BASE_URL`   | адрес бэкенда, без слэша на конце                        |
-| `VITE_ADMIN_API_KEY`  | значение заголовка `admin_api_key` — то же, что `ADMIN_API_KEY` в `backend/.env` |
-| `VITE_ADMIN_USERNAME` | логин входа в админку                                    |
-| `VITE_ADMIN_PASSWORD` | пароль входа в админку                                   |
 
 ## Вход
 
-Заглушка без бэкенда: логин/пароль сверяются на клиенте с переменными
-из `.env`, и при успехе в `localStorage` пишется `admin_logged_in =
-true`. Токена нет — это не настоящая авторизация, а барьер от
-случайного захода, под стать остальному прототипу (см. `ADMIN_API_KEY`
-в бэкенде).
+Логин и пароль проверяет бэкенд (`POST /admin/login`, значения
+`ADMIN_USERNAME` / `ADMIN_PASSWORD` в `backend/.env`). В ответ приходит
+подписанный токен на 8 часов; он хранится в `sessionStorage` и уходит в
+`Authorization: Bearer` на каждом запросе. При 401 админка сама
+возвращает на экран входа. В `VITE_*` секретов быть не должно — они
+попадают в публичный бандл.

@@ -71,8 +71,11 @@ SELECT ... FOR UPDATE по строке плательщика
 Дальше фронт шлёт заголовки `user_id` и `user_type`. Тип сверяется с
 базой; несовпадение — `user_type_mismatch`, по нему фронт разлогинивает.
 
-Админский эндпоинт защищён статическим ключом `ADMIN_API_KEY` в
-заголовке `admin_api_key`.
+Админка: `POST /admin/login` с `{username, password}` (значения
+`ADMIN_USERNAME` / `ADMIN_PASSWORD` из `.env`, на фронт не попадают) отдаёт
+`{token, expires_at}` — HMAC-токен на 8 часов (ключ `ADMIN_TOKEN_SECRET`,
+≥ 32 символов). Все `/admin/*` требуют `Authorization: Bearer <token>`.
+После 5 неудачных входов с одного IP — 429 на 15 минут.
 
 Подменой заголовка можно зайти за любого — осознанное упрощение
 прототипа, заглушка под JWT.
@@ -107,7 +110,8 @@ UUID в нижнем регистре, сумма — целое в теңңе, 
 | POST   | `/merchant/payments`          | приём оплаты по QR (только мерчант)     |
 | GET    | `/operations`                 | история, `limit` ≤ 200, `offset`        |
 | GET    | `/operations/:id`             | операция целиком                        |
-| POST   | `/admin/activation-codes`     | выпуск кода, ключ `admin_api_key`       |
+| POST   | `/admin/activation-codes`     | выпуск кода, `Authorization: Bearer`     |
+| POST   | `/admin/login`                | вход админа → токен                     |
 | GET    | `/admin/activation-codes`     | список кодов, `status`, `limit`, `offset` |
 | GET    | `/admin/users`                | список юзеров/мерчантов с балансом, `search`, `type`, `limit`, `offset` |
 | GET    | `/admin/users/:id`            | карточка юзера с балансом               |

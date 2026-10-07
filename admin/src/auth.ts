@@ -1,21 +1,43 @@
 import { env } from "./env";
 
-// Логин — заглушка: один логин/пароль из .env, без бэкенда и токена.
-// После успеха просто пишем флаг в localStorage.
-const STORAGE_KEY = "admin_logged_in";
+// Настоящая проверка логина и пароля — на бэкенде (POST /admin/login).
+// Здесь хранится только выданный токен: в sessionStorage, чтобы он
+// пропадал при закрытии вкладки. isLoggedIn нужен лишь для UI — подделка
+// токена ничего не даёт, бэкенд проверяет подпись и срок на каждом запросе.
+const TOKEN_KEY = "admin_token";
+const EXPIRES_KEY = "admin_token_expires_at";
 
-export function isLoggedIn(): boolean {
-  return localStorage.getItem(STORAGE_KEY) === "true";
+export function getToken(): string | null {
+  return sessionStorage.getItem(TOKEN_KEY);
 }
 
-export function login(username: string, password: string): boolean {
-  const ok = username === env.adminUsername && password === env.adminPassword;
-  if (ok) {
-    localStorage.setItem(STORAGE_KEY, "true");
+export function isLoggedIn(): boolean {
+  const token = getToken();
+  if (!token) return false;
+  const expires = Date.parse(sessionStorage.getItem(EXPIRES_KEY) ?? "");
+  if (!Number.isNaN(expires) && Date.now() >= expires) {
+    logout();
+    return false;
   }
-  return ok;
+  return true;
+}
+
+export async function login(username: string, password: string): Promise<boolean> {
+  const res = await fetch(`${env.apiBaseUrl}/admin/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+  });
+  if (res.status === 401) return false;
+  if (!res.ok) throw new Error(`login failed: ${res.status}`);
+
+  const body = (await res.json()) as { token: string; expires_at: string };
+  sessionStorage.setItem(TOKEN_KEY, body.token);
+  sessionStorage.setItem(EXPIRES_KEY, body.expires_at);
+  return true;
 }
 
 export function logout(): void {
-  localStorage.removeItem(STORAGE_KEY);
+  sessionStorage.removeItem(TOKEN_KEY);
+  sessionStorage.removeItem(EXPIRES_KEY);
 }

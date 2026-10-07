@@ -1,4 +1,5 @@
 import { env } from "../env";
+import { getToken, logout } from "../auth";
 import type { ActivationCode, ActivationCodeListItem, AdminUser, Entry, FeeEntry } from "./types";
 
 export class ApiError extends Error {
@@ -17,10 +18,16 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     ...init,
     headers: {
       "Content-Type": "application/json",
-      admin_api_key: env.adminApiKey,
+      Authorization: `Bearer ${getToken() ?? ""}`,
       ...init?.headers,
     },
   });
+
+  if (res.status === 401) {
+    // Токен истёк или не принят бэкендом — возвращаем на экран входа.
+    logout();
+    window.location.assign("/login");
+  }
 
   if (!res.ok) {
     let code = "unknown";

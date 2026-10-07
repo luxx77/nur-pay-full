@@ -16,11 +16,13 @@ type Server struct {
 	cfg  config.Config
 	pool *pgxpool.Pool
 	q    *store.Queries
+
+	adminLimiter *loginLimiter
 }
 
 // NewServer собирает роутер со всеми маршрутами.
 func NewServer(cfg config.Config, pool *pgxpool.Pool) *gin.Engine {
-	s := &Server{cfg: cfg, pool: pool, q: store.New(pool)}
+	s := &Server{cfg: cfg, pool: pool, q: store.New(pool), adminLimiter: newLoginLimiter()}
 
 	router := gin.New()
 	router.Use(gin.Logger(), gin.Recovery(), corsMiddleware())
@@ -55,7 +57,9 @@ func NewServer(cfg config.Config, pool *pgxpool.Pool) *gin.Engine {
 	merchant := authed.Group("/merchant", requireType(store.UserTypeMerchant))
 	merchant.POST("/payments", s.createMerchantPayment)
 
-	// Админка — не пользовательское действие, отдельный ключ.
+	// Админка — не пользовательское действие: вход по логину/паролю
+	// даёт короткоживущий токен, дальше все запросы идут с ним.
+	router.POST("/admin/login", s.adminLogin)
 	admin := router.Group("/admin", s.adminRequired())
 	admin.POST("/activation-codes", s.createActivationCode)
 	admin.GET("/activation-codes", s.listAdminActivationCodes)
@@ -81,7 +85,7 @@ func corsMiddleware() gin.HandlerFunc {
 			c.Header("Access-Control-Allow-Origin", origin)
 			c.Header("Vary", "Origin")
 			c.Header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-			c.Header("Access-Control-Allow-Headers", "Content-Type, user_id, user_type, admin_api_key")
+			c.Header("Access-Control-Allow-Headers", "Content-Type, Authorization, user_id, user_type")
 		}
 		if c.Request.Method == http.MethodOptions {
 			c.AbortWithStatus(http.StatusNoContent)

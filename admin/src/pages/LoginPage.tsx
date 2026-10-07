@@ -9,11 +9,15 @@ export function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if (login(username, password)) {
-      navigate("/users", { replace: true });
-    } else {
+    try {
+      if (await login(username, password)) {
+        navigate("/users", { replace: true });
+      } else {
+        setError(t.login.error);
+      }
+    } catch {
       setError(t.login.error);
     }
   }

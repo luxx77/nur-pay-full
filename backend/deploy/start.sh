@@ -17,7 +17,7 @@ echo "==> Рабочая директория: $BACKEND_DIR"
 if [ ! -f .env ]; then
   echo "==> .env не найден, создаю из .env.example"
   cp .env.example .env
-  echo "!!! Проверь .env перед продолжением (ADMIN_API_KEY, порты и т.п.)"
+  echo "!!! Проверь .env перед продолжением (ADMIN_USERNAME/ADMIN_PASSWORD/ADMIN_TOKEN_SECRET, порты и т.п.)"
 fi
 
 command -v docker >/dev/null || { echo "docker не найден"; exit 1; }

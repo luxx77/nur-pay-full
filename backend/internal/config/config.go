@@ -22,10 +22,13 @@ type Config struct {
 	// MerchantPaymentFeePercent — комиссия при оплате мерчанту, %.
 	MerchantPaymentFeePercent int64
 
-	// AdminAPIKey — ключ для эндпоинта выпуска кодов активации.
-	// Заглушка под нормальную админскую авторизацию, как и вход по
-	// заголовкам: ключ один на всех и лежит в окружении.
-	AdminAPIKey string
+	// Логин и пароль админки. Проверяются только на сервере.
+	AdminUsername string
+	AdminPassword string
+
+	// AdminTokenSecret — ключ подписи админских токенов (HMAC), не короче
+	// 32 символов. Смена ключа разлогинивает всех админов.
+	AdminTokenSecret string
 
 	ShutdownTimeout time.Duration
 }
@@ -51,8 +54,17 @@ func Load() (Config, error) {
 	if cfg.MerchantPaymentFeePercent, err = requirePercent("MERCHANT_PAYMENT_FEE"); err != nil {
 		return Config{}, err
 	}
-	if cfg.AdminAPIKey, err = requireEnv("ADMIN_API_KEY"); err != nil {
+	if cfg.AdminUsername, err = requireEnv("ADMIN_USERNAME"); err != nil {
 		return Config{}, err
+	}
+	if cfg.AdminPassword, err = requireEnv("ADMIN_PASSWORD"); err != nil {
+		return Config{}, err
+	}
+	if cfg.AdminTokenSecret, err = requireEnv("ADMIN_TOKEN_SECRET"); err != nil {
+		return Config{}, err
+	}
+	if len(cfg.AdminTokenSecret) < 32 {
+		return Config{}, fmt.Errorf("ADMIN_TOKEN_SECRET must be at least 32 characters")
 	}
 
 	return cfg, nil

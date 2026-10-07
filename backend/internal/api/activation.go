@@ -14,9 +14,6 @@ import (
 	"github.com/nurpay/backend/internal/store"
 )
 
-// Заголовок админского эндпоинта выпуска кодов.
-const headerAdminAPIKey = "admin_api_key"
-
 // Код печатается на карте и вводится руками, поэтому он цифровой и
 // короткий: 12 цифр, как на экране ввода в приложении.
 const activationCodeDigits = 12
@@ -47,18 +44,6 @@ type activationCodeResponse struct {
 
 type activateRequest struct {
 	Code string `json:"code"`
-}
-
-// adminRequired пропускает дальше только со статическим ключом из .env.
-func (s *Server) adminRequired() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		if c.GetHeader(headerAdminAPIKey) != s.cfg.AdminAPIKey {
-			Fail(c, http.StatusUnauthorized, CodeUnauthorized,
-				"admin_api_key header is missing or wrong")
-			return
-		}
-		c.Next()
-	}
 }
 
 // createActivationCode выпускает код. Проводок при этом не появляется:

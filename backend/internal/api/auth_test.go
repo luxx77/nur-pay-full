@@ -23,3 +23,16 @@ func TestNormalizePhone(t *testing.T) {
 		}
 	}
 }
+
+func TestLocalPhoneDigits(t *testing.T) {
+	got := localPhoneDigits([]string{"+993 61 188798", "61188798", "+99361188798", "123"})
+	want := []string{"61188798", "61188798", "61188798"}
+	if len(got) != len(want) {
+		t.Fatalf("got %v, want %v", got, want)
+	}
+	for i := range want {
+		if got[i] != want[i] {
+			t.Fatalf("got %v, want %v", got, want)
+		}
+	}
+}

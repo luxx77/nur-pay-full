@@ -93,7 +93,7 @@ func (s *Server) lookupPhones(c *gin.Context) {
 		return
 	}
 
-	phones := dedupeNonEmpty(req.Phones)
+	phones := dedupeNonEmpty(localPhoneDigits(req.Phones))
 	if len(phones) == 0 {
 		c.JSON(http.StatusOK, lookupPhonesResponse{Matches: []publicUserResponse{}})
 		return
@@ -110,6 +110,26 @@ func (s *Server) lookupPhones(c *gin.Context) {
 		matches[i] = newPublicUserResponse(user)
 	}
 	c.JSON(http.StatusOK, lookupPhonesResponse{Matches: matches})
+}
+
+// localPhoneDigits сводит номера к последним 8 цифрам — тому, по чему
+// запрос сравнивает их с базой. Пробелы, «+» и код страны не важны;
+// слишком короткие номера отбрасываются.
+func localPhoneDigits(phones []string) []string {
+	out := make([]string, 0, len(phones))
+	for _, raw := range phones {
+		var digits []rune
+		for _, r := range raw {
+			if r >= '0' && r <= '9' {
+				digits = append(digits, r)
+			}
+		}
+		if len(digits) < 8 {
+			continue
+		}
+		out = append(out, string(digits[len(digits)-8:]))
+	}
+	return out
 }
 
 func dedupeNonEmpty(values []string) []string {

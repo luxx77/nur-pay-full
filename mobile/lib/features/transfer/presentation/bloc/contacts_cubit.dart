@@ -96,7 +96,11 @@ class ContactsCubit extends Cubit<ContactsState> {
         return;
       }
 
-      final matches = await _wallet.lookupPhones(byNumber.keys.toList());
+      // На сервер уходят номера в каноническом виде +993XXXXXXXX, без
+      // пробелов и прочего мусора из телефонной книги.
+      final matches = await _wallet.lookupPhones(
+        byNumber.keys.map((local) => '+993$local').toList(),
+      );
       final userByNumber = {
         for (final user in matches)
           if (user.phone != null) _localDigits(user.phone!): user,

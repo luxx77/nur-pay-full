@@ -14,6 +14,48 @@ Closed-loop электронный кошелёк для Туркмениста�
 
 Спецификация — [`NurPayTZ.md`](NurPayTZ.md).
 
+## Демо
+
+Прототип задеплоен и работает.
+
+API (проверка: `/healthz`):
+
+```
+https://nurpay-api.rovshen.com/
+```
+
+Админка (React):
+
+```
+https://nurpay-admin.rovshen.com/
+```
+
+Логин:
+
+```
+admin
+```
+
+Пароль:
+
+```
+4w7R5I9mZOGH8G0IwIWBCIZJ5tnxy1i
+```
+
+### Android APK
+
+Сборки уже смотрят на боевой API, их можно ставить сразу. Для
+большинства телефонов подходит `arm64-v8a`.
+
+| сборка | для чего |
+|--------|----------|
+| [nur-pay-arm64-v8a.apk](https://github.com/luxx77/nur-pay-full/raw/main/assets/apk/nur-pay-arm64-v8a.apk) | современные телефоны |
+| [nur-pay-armeabi-v7a.apk](https://github.com/luxx77/nur-pay-full/raw/main/assets/apk/nur-pay-armeabi-v7a.apk) | старые 32-битные телефоны |
+| [nur-pay-x86_64.apk](https://github.com/luxx77/nur-pay-full/raw/main/assets/apk/nur-pay-x86_64.apk) | эмулятор Android |
+
+Вход: любой туркменский номер (+993 и 8 цифр), код из SMS любой, PIN
+задаётся на телефоне.
+
 ## Скриншоты
 
 UI на туркменском (латиница). Снято на iPhone 17 Pro.
